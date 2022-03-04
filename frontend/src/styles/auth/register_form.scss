@@ -1,0 +1,22 @@
+@import url(../base/_variables.scss);
+.form {
+  border-radius: 10px;
+  padding: 1rem;
+  z-index: 10;
+  margin: 10% auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Параметры тени */
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(8px);
+  &-field {
+    margin: 0.5rem;
+  }
+}
+.wrapper {
+  display: flex;
+  align-items: center;
+}
