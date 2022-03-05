@@ -3,7 +3,12 @@ var app = express();
 var bodyParser = require("body-parser");
 const cors = require("cors");
 // const socket = require("socket.io");
-
+const config = {
+  cors: {
+    origin: "*",
+    credentials: false,
+  },
+};
 const corsOptions = {
   origin: "http://localhost:4200",
   optionsSuccessStatus: 200,
@@ -41,7 +46,7 @@ require("./app/route/user.route.js")(app);
 app.use(express.static("public"));
 // Create a Server
 const http = require("http").Server(app);
-const io = require("socket.io")(http);
+const io = require("socket.io")(http, config);
 var server = http.listen(8081, function () {
   var host = server.address().host;
   var port = server.address().port;

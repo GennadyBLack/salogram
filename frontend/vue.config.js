@@ -3,11 +3,11 @@ module.exports = {
     port: 4200,
   },
 
-  css: {
-    loaderOptions: {
-      css: {
-        requireModuleExtension: true,
-      },
-    },
-  },
+  // css: {
+  //   loaderOptions: {
+  //     css: {
+  //       requireModuleExtension: true,
+  //     },
+  //   },
+  // },
 }
