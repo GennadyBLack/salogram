@@ -14,7 +14,7 @@ export default () => {
     login_form.value[name] = value
   }
   const redirect = () => {
-    router.push({ name: 'board' })
+    router.push({ name: 'main' })
   }
   const login = async () => {
     await sendLoginForm(login_form.value)

@@ -43,8 +43,8 @@ export default {
 .date-input {
   width: 100%;
   height: 51px;
-  background: rgba(225, 233, 243, 0.5) url('/img/date-input-bg.svg') right
-    center no-repeat;
+  /* background: rgba(225, 233, 243, 0.5) url('/img/date-input-bg.svg') right */
+  /* center no-repeat; */
   border-radius: 16px;
   border: none;
   padding: 0px 20px;

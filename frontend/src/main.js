@@ -5,7 +5,7 @@ import './plugins/vee-validate'
 import App from './App.vue'
 import api from './api/index'
 import './registerServiceWorker'
-import './styles/index.scss'
+
 import router from './router'
 import number from './plugins/v-number'
 import slice from './plugins/v-slice'

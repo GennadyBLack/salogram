@@ -21,7 +21,6 @@ exports.create = (req, res) => {
 
 // FETCH all tasks
 exports.findAll = (req, res) => {
-  console.log(req, "req");
   Task.findAll()
     .then((tasks) => {
       // Send all tasks to Client
@@ -35,7 +34,6 @@ exports.findAll = (req, res) => {
 // Find a Task by Id
 exports.findById = async (req, res) => {
   try {
-    console.log(Task);
     await Task.findOne({
       where: { id: req.params.taskId },
     })
@@ -46,7 +44,6 @@ exports.findById = async (req, res) => {
         res.status(500).send("Error -> " + err);
       });
   } catch (error) {
-    console.log("error from get tast");
     res.status(500).send("Error -> " + error);
   }
 };

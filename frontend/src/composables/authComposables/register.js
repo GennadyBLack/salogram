@@ -17,7 +17,7 @@ export default () => {
       .then((res) => {
         saveToken(res.data.token),
           setNotice('Register successfull', 'success_message')
-        router.push({ name: 'board' })
+        router.push({ name: 'main' })
       })
       .catch(() => {
         setNotice('Register error')

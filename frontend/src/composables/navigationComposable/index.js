@@ -6,7 +6,8 @@ export function MainMenuComposable(props) {
   const allRoutes = [
     { name: 'login', title: 'Login', auth: true, type: 'button' },
     { name: 'register', title: 'Register', auth: true, type: 'button' },
-    { name: 'board_list', title: 'Boards', auth: false, type: 'button' },
+    { name: 'main', title: 'Main', auth: false, type: 'button' },
+    { name: 'direct', title: 'Direct', auth: false, type: 'button' },
     // { name: 'board', title: 'Create', auth: false, type: 'button' },
   ]
 
