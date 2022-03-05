@@ -56,8 +56,10 @@ var server = http.listen(8081, function () {
 // Static files
 
 // Socket setup
-console.log(io, "IIIIIOOOOOOO");
+
 io.on("connection", function (socket) {
+  console.log(socket.connected);
+  console.log("A user with ID: " + socket.id + " connected");
   console.log("Made socket connection");
 });
 
