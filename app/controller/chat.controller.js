@@ -1,5 +1,6 @@
 const db = require("../config/db.config.js");
-const Chat = db.board;
+const Chat = db.chat;
+const User = db.user;
 
 // FETCH all boards
 exports.findAll = (req, res) => {
@@ -69,4 +70,21 @@ exports.createMessage = (req, res) => {
   } catch (error) {
     console.log(error, "ERROR FROM USER CONROLLER");
   }
+};
+
+exports.createChat = async (req, res) => {
+    try {
+        console.log(req.body)
+        const id1 = req.body.id
+        const id2 = req.body.tovarischId
+      const chat = await Chat.create({})
+        // const user = await User.findOne({ where: { id: id1 } })
+        chat.setUsers(id1)
+        chat.setUsers(id2)
+        // chat.setUsers({req.body.tovarischId})
+        chat.save()
+        res.send(chat)
+    } catch (error) {
+        console.log(error, "ERROR FROM USER CONROLLER");
+    }
 };

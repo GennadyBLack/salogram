@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  const chats = require("../controller/board.controller.js");
+  const chats = require("../controller/chat.controller.js");
 
   // Retrieve all Boards
   app.get("/api/chats", chats.findAll);
@@ -14,5 +14,10 @@ module.exports = function (app) {
   app.delete("/api/chats/:chatId", chats.delete);
 
   //CREATE MESSAGE
-  app.post("/api/chats/:chatId/message", column.createMessage);
+  app.post("/api/chats/:chatId/message", chats.createMessage);
+
+  //CREATE CHAT
+  app.post("/api/chats", chats.createChat);
+
+
 };

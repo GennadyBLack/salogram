@@ -15,12 +15,15 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
   },
 });
 
+//Создаем бд
 const db = {};
 
+//Подрубаем сиквалайз для облегченного обращения к бд
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 //Models/tables
+//Добавляем таблицу в бд, импортируя модель
 db.user = require("../model/user.model.js")(sequelize, Sequelize);
 db.chat = require("../model/chat.model.js")(sequelize, Sequelize);
 db.message = require("../model/message.model.js")(sequelize, Sequelize);
