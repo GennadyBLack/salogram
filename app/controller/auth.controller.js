@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const tokenSecret = "my-token-secret";
 const db = require("../config/db.config.js");
 const User = db.user;
+const Chat = db.chat;
 
 // login
 exports.login = async (req, res) => {
@@ -65,7 +66,7 @@ exports.me = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { id: req.user.id },
-      // include: "Chat",
+      include: "chats",
     });
     console.log(user, "OTVET");
     res.status(200).json({ user: user });

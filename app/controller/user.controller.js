@@ -5,7 +5,7 @@
 
 const db = require("../config/db.config.js");
 const User = db.user;
-
+const Chat = db.chat;
 // Post a Task
 // exports.create = (req, res) => {
 // 	console.log(req.body)
@@ -25,7 +25,7 @@ const User = db.user;
 
 // FETCH all users
 exports.findAll = (req, res) => {
-  User.findAll()
+  User.findAll({ include: "chats" })
     .then((users) => {
       // Send all tasks to Client
       res.send(users);

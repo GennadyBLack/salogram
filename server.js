@@ -39,9 +39,6 @@ db.sequelize.sync({ force: true }).then(() => {
 
 //Routes
 require("./app/route/auth.route.js")(app);
-// require("./app/route/board.route.js")(app);
-// require("./app/route/column.route.js")(app);
-// require("./app/route/task.route.js")(app);
 require("./app/route/user.route.js")(app);
 app.use(express.static("public"));
 // Create a Server
