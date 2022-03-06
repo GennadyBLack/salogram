@@ -86,11 +86,11 @@ exports.test = (req, res) => {
     });
 };
 
-exports.createBoard = (req, res) => {
+exports.createChat = (req, res) => {
   try {
     User.findOne({ where: { id: req.params.userId } })
       .then((User) => {
-        User.createBoard({
+        User.createChat({
           ...req.body,
         });
         res.send(User);

@@ -18,13 +18,8 @@ module.exports = (sequelize, Sequelize) => {
       //     this.setDataValue('password', hash(value))
       //   },
     },
-    role: {
+    description: {
       type: Sequelize.STRING,
-      defaultValue: "user",
-      allowNull: false,
-    },
-    active_board: {
-      type: Sequelize.INTEGER,
     },
   });
 

@@ -65,9 +65,9 @@ exports.me = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { id: req.user.id },
-      include: "boards",
+      // include: "Chat",
     });
-
+    console.log(user, "OTVET");
     res.status(200).json({ user: user });
   } catch (error) {
     res.status(500).json({ error: error });

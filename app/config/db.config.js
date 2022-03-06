@@ -19,22 +19,25 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-//habr.com/ru/post/566036/
+
 //Models/tables
-db.task = require("../model/task.model.js")(sequelize, Sequelize);
 db.user = require("../model/user.model.js")(sequelize, Sequelize);
-db.board = require("../model/board.model.js")(sequelize, Sequelize);
-db.column = require("../model/column.model.js")(sequelize, Sequelize);
+db.chat = require("../model/chat.model.js")(sequelize, Sequelize);
+db.message = require("../model/message.model.js")(sequelize, Sequelize);
+// db.setting = require("../model/setting.model.js")(sequelize, Sequelize);
 
 //?RELATONSHIPS
-db.user.hasMany(db.board);
-db.board.belongsTo(db.user);
+db.user.belongsToMany(db.chat, { through: "userChats" });
+db.chat.belongsToMany(db.user, { through: "userChats" });
 
-db.board.hasMany(db.column);
-db.column.belongsTo(db.board);
+db.chat.hasMany(db.message, { onDelete: "CASCADE" });
+db.message.belongsTo(db.chat);
 
-db.column.hasMany(db.task);
-db.task.belongsTo(db.column);
+db.user.hasMany(db.message);
+db.message.belongsTo(db.user);
+
+// db.column.hasMany(db.task);
+// db.task.belongsTo(db.column);
 
 // db.role = require("../models/role.model.js")(sequelize, Sequelize);
 

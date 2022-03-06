@@ -18,5 +18,5 @@ module.exports = function (app) {
   // Delete a Customer with Id
   app.delete("/api/user/:userId", user.delete);
 
-  app.post("/api/users/:userId/boards", user.createBoard);
+  app.post("/api/users/:userId/chat", user.createChat);
 };

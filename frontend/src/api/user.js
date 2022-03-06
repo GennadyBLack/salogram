@@ -1,17 +1,17 @@
 import api from './index'
 
-export const getAllUsers = () => {
-  return api.get('/users', {})
+const users = {
+  getAllUsers: (config = {}) => {
+    return api.get('/users', config)
+  },
+  deleteUserById: (id) => {
+    return api.delete('/user', { id })
+  },
+  test: () => {
+    return api.get('/users/test', {})
+  },
+  createBoard: (id, data) => {
+    return api.post(`/users/${id}/boards`, data)
+  },
 }
-
-export const deleteUserById = (id) => {
-  return api.delete('/user', { id })
-}
-
-export const test = () => {
-  return api.get('/users/test', {})
-}
-
-export const createBoard = (id, data) => {
-  return api.post(`/users/${id}/boards`, data)
-}
+export default users

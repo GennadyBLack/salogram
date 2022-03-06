@@ -8,6 +8,8 @@ export function MainMenuComposable(props) {
     { name: 'register', title: 'Register', auth: true, type: 'button' },
     { name: 'main', title: 'Main', auth: false, type: 'button' },
     { name: 'direct', title: 'Direct', auth: false, type: 'button' },
+    // { name: 'users', title: 'Users', auth: false, type: 'button' },
+
     // { name: 'board', title: 'Create', auth: false, type: 'button' },
   ]
 
