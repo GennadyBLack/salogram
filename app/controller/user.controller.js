@@ -104,15 +104,12 @@ exports.createChat = (req, res) => {
 };
 
 // Find a Task by Id
-exports.findUserChats = (req, res) => {
+exports.findUserChats = async (req, res) => {
   try {
-    Chat.findAll({ where: { userChats: req.params.userId } })
-      .then((User) => {
-        res.send(User);
-      })
-      .catch((err) => {
-        res.status(500).send("Error -> " + err);
-      });
+    const user = await User.findOne({ where: { id: req.params.userId } });
+    const chats = await user.getChats({ include: ["users"] });
+    console.log(chats, "CHHHAAAT");
+    res.status(200).send(chats);
   } catch (error) {
     console.log(error);
   }

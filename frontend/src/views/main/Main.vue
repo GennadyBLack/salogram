@@ -37,3 +37,10 @@ const create_chat = async (personId) => {
   await chat.createChat({ current: current_user.value.id, person: personId })
 }
 </script>
+<style lang="scss">
+.test {
+  &-testus {
+    color: red;
+  }
+}
+</style>
