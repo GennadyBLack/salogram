@@ -41,9 +41,11 @@ db.sequelize.sync({ force: false }).then(() => {
 require("./app/route/auth.route.js")(app);
 require("./app/route/user.route.js")(app);
 require("./app/route/chat.route.js")(app);
+
 app.use(express.static("public"));
 // Create a Server
 const http = require("http").Server(app);
+//Create socket
 const io = require("socket.io")(http, config);
 var server = http.listen(8081, function () {
   var host = server.address().host;

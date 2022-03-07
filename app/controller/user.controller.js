@@ -102,3 +102,18 @@ exports.createChat = (req, res) => {
     console.log(error, "ERROR FROM USER CONROLLER");
   }
 };
+
+// Find a Task by Id
+exports.findUserChats = (req, res) => {
+  try {
+    Chat.findAll({ where: { userChats: req.params.userId } })
+      .then((User) => {
+        res.send(User);
+      })
+      .catch((err) => {
+        res.status(500).send("Error -> " + err);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};

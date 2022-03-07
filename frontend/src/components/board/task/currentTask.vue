@@ -61,6 +61,5 @@ const { editTaskForm } = editTask(props.id)
   }
 }
 #app {
-  max-height: 100vh !important;
 }
 </style>

@@ -19,4 +19,6 @@ module.exports = function (app) {
   app.delete("/api/user/:userId", user.delete);
 
   app.post("/api/users/:userId/chat", user.createChat);
+
+  app.get("/api/users/:userId/chats", user.findUserChats);
 };

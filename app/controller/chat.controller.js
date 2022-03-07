@@ -73,18 +73,15 @@ exports.createMessage = (req, res) => {
 };
 
 exports.createChat = async (req, res) => {
-    try {
-        console.log(req.body)
-        const id1 = req.body.id
-        const id2 = req.body.tovarischId
-      const chat = await Chat.create({})
-        // const user = await User.findOne({ where: { id: id1 } })
-        chat.setUsers(id1)
-        chat.setUsers(id2)
-        // chat.setUsers({req.body.tovarischId})
-        chat.save()
-        res.send(chat)
-    } catch (error) {
-        console.log(error, "ERROR FROM USER CONROLLER");
-    }
+  try {
+    const chat = await Chat.create({
+      title: `${req.body.current}.${req.body.person}`,
+    });
+    chat.setUsers([req.body.current, req.body.person]);
+    chat.save();
+    res.status(200).send(chat);
+  } catch (error) {
+    req.status(400).send("error man");
+    console.log(error, "ERROR FROM USER CONROLLER");
+  }
 };
