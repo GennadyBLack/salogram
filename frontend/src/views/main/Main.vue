@@ -30,7 +30,7 @@ import users from '../../api/user'
 const { users: test } = useUsers()
 // console.log(socket)
 const sock = () => {
-  users.getAllUserChats(current_user.value.id, {})
+  users.getAllUserChats({})
   // socketEmit('testus')
 }
 const create_chat = async (personId) => {

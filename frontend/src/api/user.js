@@ -13,8 +13,8 @@ const users = {
   createBoard: (id, data) => {
     return api.post(`/users/${id}/boards`, data)
   },
-  getAllUserChats: (id, config) => {
-    return api.get(`/users/${id}/chats`, config)
+  getAllUserChats: (config) => {
+    return api.get(`/me/chats`, config)
   },
 }
 export default users

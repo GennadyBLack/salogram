@@ -2,7 +2,7 @@ import api from './index'
 
 const chat = {
   getAllUserChat: (config = {}) => {
-    return api.get('/chats', config)
+    return api.get('/me/chats', config)
   },
   deleteChatById: (id) => {
     return api.delete('/chats', { id })
