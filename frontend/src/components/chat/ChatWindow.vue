@@ -8,7 +8,7 @@
             </ul>
         </div>
         <div class="dialog col-8">
-            
+
         </div>
     </div>
 </template>
@@ -21,7 +21,7 @@
 <style scoped>
     .main-window {
         width: 50vw;
-    }
+    }w
     .main-li {
         border-bottom: 1px solid gray;
     }

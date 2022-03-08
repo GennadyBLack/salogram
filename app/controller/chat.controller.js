@@ -74,6 +74,16 @@ exports.createMessage = (req, res) => {
 
 exports.createChat = async (req, res) => {
   try {
+    if(!req?.body.person) {
+      //хз работает ли тут throw
+      throw new Error("Choose person to start a chat")
+    }
+    //Проверка на существующий чат
+    //Ищем в userChats чат, в котором есть оба id. Если такой есть, выкидываем ошибку.
+    // if(!req?.body.person) {
+    //   //хз работает ли тут throw
+    //   throw new Error("Choose person to start a chat")
+    // }
     const chat = await Chat.create({
       title: `${req.body.current}.${req.body.person}`,
     });
