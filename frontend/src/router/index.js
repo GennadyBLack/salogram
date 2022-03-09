@@ -34,7 +34,17 @@ const routes = [
     component: Direct,
     meta: { layout: 'DefaultLayout', requiresAuth: true },
     props: true,
+    children: [
+      {
+        path: '/:id',
+        name: 'directus',
+        component: Direct,
+        meta: { layout: 'DefaultLayout', requiresAuth: true },
+        props: true,
+      },
+    ],
   },
+
   // {
   //   path: '/board/:id',
   //   name: 'board',
