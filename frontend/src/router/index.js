@@ -36,8 +36,8 @@ const routes = [
     props: true,
     children: [
       {
-        path: '/:id',
-        name: 'directus',
+        path: '/direct/:id',
+        name: 'current_chat',
         component: Direct,
         meta: { layout: 'DefaultLayout', requiresAuth: true },
         props: true,

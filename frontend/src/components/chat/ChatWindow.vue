@@ -8,7 +8,7 @@
               class="chat-link"
               v-if="current_user.id !== user.id"
               :key="user.id"
-              :to="{ name: 'directus', params: { id: user.id } }"
+              :to="{ name: 'current_chat', params: { id: user.id } }"
             >
               {{ user.username }}
             </router-link></template
@@ -16,11 +16,14 @@
         </li>
       </ul>
     </div>
-    <div class="dialog col-8"></div>
+    <div class="dialog col-8">
+      <ChatMessagesList />
+    </div>
   </div>
 </template>
 
 <script setup>
+import ChatMessagesList from './ChatMessagesList.vue'
 import userChats from '../../composables/chatComposable'
 import { current_user } from '@/composables/CurrentUserComposable'
 const { chats } = userChats()
@@ -31,7 +34,15 @@ const { chats } = userChats()
   width: 50vw;
 }
 .main-li {
+  opacity: 0.7;
+  text-decoration: none;
   border-bottom: 1px solid gray;
+  list-style-type: none; /* Убираем маркеры */
+  padding: 1rem;
+  background: #eee;
+}
+.main-li:hover {
+  opacity: 1;
 }
 .chats,
 .dialog {
@@ -41,5 +52,9 @@ const { chats } = userChats()
   background: white;
   color: black;
   padding: 1rem;
+}
+.chat-link {
+  text-decoration: none;
+  color: black;
 }
 </style>
