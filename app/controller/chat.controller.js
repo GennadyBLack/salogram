@@ -1,6 +1,5 @@
 const db = require("../config/db.config.js");
 const Chat = db.chat;
-const User = db.user;
 
 // FETCH all boards
 exports.findAll = (req, res) => {
@@ -61,7 +60,7 @@ exports.createMessage = (req, res) => {
     Chat.findByPk(req.params.chatId)
       .then((Chat) => {
         console.log(Chat, "CHAAAT");
-        Chat.createMessages({
+        Chat.createMessage({
           ...req.body,
         });
         res.send(Chat);

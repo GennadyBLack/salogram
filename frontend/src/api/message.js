@@ -1,5 +1,6 @@
 import api from './index'
-const messages = {
+
+const messagesApi = {
   deleteMessageById: (id) => {
     return api.delete('/message', { id })
   },
@@ -16,4 +17,4 @@ const messages = {
     return api.get(`/messages`, config)
   },
 }
-export default messages
+export default messagesApi

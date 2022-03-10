@@ -1,6 +1,6 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { messages as messageApi } from '@/api/message'
+import messagesApi from '../../api/message'
 
 const initFilter = { limit: 10, page: 1 }
 
@@ -10,8 +10,7 @@ export default () => {
   const id = computed(() => route.params.id)
 
   const fetchMessages = async (config = initFilter) => {
-    console.log(id.value, 'route.params.id')
-    // messages.value = await messageApi.getMessagesList(config)
+    messages.value = (await messagesApi.getMessagesList(config)).data
   }
 
   onMounted(async () => {
@@ -21,6 +20,7 @@ export default () => {
   watch(
     id,
     (curValue, oldValue) => {
+      messages.value = []
       //   console.log(curValue.params.id, oldValue.params.id)
       console.log(curValue, oldValue)
       fetchMessages()

@@ -37,7 +37,8 @@ db.sequelize.sync({ force: false }).then(() => {
 //   });
 // }
 
-//Routes
+//=============== Routes====================
+require("./app/route/message.route.js")(app);
 require("./app/route/auth.route.js")(app);
 require("./app/route/user.route.js")(app);
 require("./app/route/chat.route.js")(app);

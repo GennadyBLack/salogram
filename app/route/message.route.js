@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  const messages = require("../controller/board.controller.js");
+  const messages = require("../controller/message.controller.js");
 
   // Retrieve all Boards
   app.get("/api/messages", messages.findAll);

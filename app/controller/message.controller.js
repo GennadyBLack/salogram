@@ -1,5 +1,5 @@
 const db = require("../config/db.config.js");
-const Message = db.board;
+const Message = db.message;
 
 // FETCH all boards
 exports.findAll = (req, res) => {
