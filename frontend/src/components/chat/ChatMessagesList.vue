@@ -3,8 +3,8 @@
     <div class="messages">
       <li v-for="message in messages" :key="message.id">{{ message.text }}</li>
     </div>
-    <form class="text-field row" @submit.prevent="sendMessage">
-      <v-input-field class="col-9" v-model="text"></v-input-field>
+    <form class="message-form d-flex" @submit.prevent="sendMessage">
+      <input class="col-9 text-field" v-model="text">
       <button class="col-2" type="submit">Отправить</button>
     </form>
   </div>
@@ -27,18 +27,26 @@ async function sendMessage() {
 </script>
 <style lang="scss">
 .messages-wrapper {
-  background: #eee;
+  background: white;
   width: 100%;
   height: 100%;
-  overflow: scroll;
+  overflow-y: auto;
+  padding: 0.5rem
 }
 .messages {
   height: 85%;
   display: block;
 }
+.message-form {
+  margin-top: 1rem;
+}
 .text-field {
-  height: 15%;
-  border: 1px solid black;
+  padding: 0.5rem 0.5rem;
+  border: 1px solid dodgerblue;
   background-color: white;
+  &:focus {
+    outline: 1px solid dodgerblue;
+    border: 1px solid dodgerblue;
+  }
 }
 </style>

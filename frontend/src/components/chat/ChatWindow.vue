@@ -1,7 +1,7 @@
 <template>
-  <div class="form">
+  <div class="form main-window">
     <div class="wrapper chat">
-      <div class="form col-4 chat-menu">
+      <div class="col-4 chat-menu">
         <ul>
           <li v-for="chat in chats" :key="chat.id">
             <template v-for="user in chat.users"
@@ -17,7 +17,7 @@
           </li>
         </ul>
       </div>
-      <div class="col-8 form chat-messages">
+      <div class="col-8 chat-messages">
         <ChatMessagesList />
       </div>
     </div>
@@ -33,7 +33,7 @@ const { chats } = userChats()
 
 <style scoped lang="scss">
 .main-window {
-  width: 50vw;
+  width: 95%;
 }
 .main-li {
   opacity: 0.7;
@@ -67,10 +67,14 @@ const { chats } = userChats()
   max-height: 40rem;
   padding: 2rem;
   &-menu {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
   }
   &-messages {
     max-height: 100%;
-    overflow: auto;
+    /*overflow: auto;*/
   }
 }
 </style>

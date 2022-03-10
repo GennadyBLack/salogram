@@ -530,7 +530,7 @@ body {
 }
 
 .auth-layout {
-  background-image: url('../img//log.jpg');
+  background-image: url('../img/log.jpg');
   display: flex;
   flex-direction: column;
 }

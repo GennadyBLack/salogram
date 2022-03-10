@@ -22,7 +22,7 @@
       :placeholder="placeholder"
       :type="type"
       :disabled="disabled"
-      :style="{ height: `${col * 35}px` }"
+      :style="{ width: `${col * 35}px` }"
     />
   </div>
 </template>
