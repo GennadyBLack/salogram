@@ -10,5 +10,8 @@ const chat = {
   createChat: (data) => {
     return api.post(`/chats`, data)
   },
+  createMessage: (id, data) => {
+    return api.post(`/chats/${id}/message`, data)
+  },
 }
 export default chat

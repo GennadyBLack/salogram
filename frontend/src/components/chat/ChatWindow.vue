@@ -8,7 +8,7 @@
               class="chat-link"
               v-if="current_user.id !== user.id"
               :key="user.id"
-              :to="{ name: 'current_chat', params: { id: user.id } }"
+              :to="{ name: 'current_chat', params: { id: chat.id } }"
             >
               {{ user.username }}
             </router-link></template

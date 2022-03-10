@@ -22,7 +22,7 @@ const routes = [
     meta: { layout: 'AuthLayout', requiresAuth: false },
   },
   {
-    path: '/main',
+    path: '/',
     name: 'main',
     component: Main,
     meta: { layout: 'DefaultLayout', requiresAuth: true },

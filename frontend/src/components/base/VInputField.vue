@@ -29,7 +29,7 @@
 import { Field } from 'vee-validate'
 import InputField from '../fields/InputField'
 export default {
-  name: 'ValidationInputField',
+  name: 'VInputField',
   components: {
     InputField,
     Field,
