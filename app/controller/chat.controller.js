@@ -62,6 +62,7 @@ exports.createMessage = (req, res) => {
         console.log(Chat, "CHAAAT");
         Chat.createMessage({
           ...req.body,
+          userId: req.user.id,
         });
         res.send(Chat);
       })

@@ -10,7 +10,7 @@ export default () => {
   const id = computed(() => route.params.id)
 
   const fetchMessages = async (config = initFilter) => {
-    messages.value = (await messagesApi.getMessagesList(config)).data
+    messages.value = (await messagesApi.getMessagesList(id.value, config)).data
   }
 
   onMounted(async () => {

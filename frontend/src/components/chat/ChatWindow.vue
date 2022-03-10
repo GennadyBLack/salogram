@@ -1,23 +1,25 @@
 <template>
-  <div class="main-window d-flex row m-auto">
-    <div class="chats col-4">
-      <ul>
-        <li v-for="chat in chats" :key="chat.id" class="main-li">
-          <template v-for="user in chat.users"
-            ><router-link
-              class="chat-link"
-              v-if="current_user.id !== user.id"
-              :key="user.id"
-              :to="{ name: 'current_chat', params: { id: chat.id } }"
+  <div class="form">
+    <div class="wrapper chat">
+      <div class="form col-4 chat-menu">
+        <ul>
+          <li v-for="chat in chats" :key="chat.id">
+            <template v-for="user in chat.users"
+              ><router-link
+                class="chat-link"
+                v-if="current_user.id !== user.id"
+                :key="user.id"
+                :to="{ name: 'current_chat', params: { id: chat.id } }"
+              >
+                {{ user.username }}
+              </router-link></template
             >
-              {{ user.username }}
-            </router-link></template
-          >
-        </li>
-      </ul>
-    </div>
-    <div class="dialog col-8">
-      <ChatMessagesList />
+          </li>
+        </ul>
+      </div>
+      <div class="col-8 form chat-messages">
+        <ChatMessagesList />
+      </div>
     </div>
   </div>
 </template>
@@ -29,7 +31,7 @@ import { current_user } from '@/composables/CurrentUserComposable'
 const { chats } = userChats()
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .main-window {
   width: 50vw;
 }
@@ -56,5 +58,19 @@ const { chats } = userChats()
 .chat-link {
   text-decoration: none;
   color: black;
+}
+.wrapper {
+  box-sizing: border-box;
+  width: 100%;
+}
+.chat {
+  max-height: 40rem;
+  padding: 2rem;
+  &-menu {
+  }
+  &-messages {
+    max-height: 100%;
+    overflow: auto;
+  }
 }
 </style>

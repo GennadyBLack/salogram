@@ -13,8 +13,8 @@ const messagesApi = {
   getMessageById: (id, config) => {
     return api.get(`/messages/${id}`, config)
   },
-  getMessagesList: (config) => {
-    return api.get(`/messages`, config)
+  getMessagesList: (id, config) => {
+    return api.get(`/messages/${id}`, config)
   },
 }
 export default messagesApi

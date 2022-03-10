@@ -1,12 +1,16 @@
 const db = require("../config/db.config.js");
 const Message = db.message;
+const Chat = db.chat;
 
 // FETCH all boards
-exports.findAll = (req, res) => {
-  Message.findAll()
+exports.findAll = async (req, res) => {
+  await Message.findAll({
+    where: { chatId: req.params.chatId },
+    include: "user",
+  })
     .then((messages) => {
       // Send all boards to Client
-      res.send(messages);
+      res.status(200).send(messages);
     })
     .catch((err) => {
       res.status(500).send("Error -> " + err);

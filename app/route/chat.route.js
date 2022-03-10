@@ -1,3 +1,5 @@
+const middleware = require("../middleware/chekToken");
+
 module.exports = function (app) {
   const chats = require("../controller/chat.controller.js");
 
@@ -14,10 +16,12 @@ module.exports = function (app) {
   app.delete("/api/chats/:chatId", chats.delete);
 
   //CREATE MESSAGE
-  app.post("/api/chats/:chatId/message", chats.createMessage);
+  app.post(
+    "/api/chats/:chatId/message",
+    middleware.verify,
+    chats.createMessage
+  );
 
   //CREATE CHAT
   app.post("/api/chats", chats.createChat);
-
-
 };

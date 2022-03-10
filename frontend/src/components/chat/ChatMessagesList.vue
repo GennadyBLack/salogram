@@ -1,7 +1,7 @@
 <template>
   <div class="messages-wrapper">
     <div class="messages">
-      <li v-for="message in messages" :key="message.id">{{message.text}}</li>
+      <li v-for="message in messages" :key="message.id">{{ message.text }}</li>
     </div>
     <form class="text-field row" @submit.prevent="sendMessage">
       <v-input-field class="col-9" v-model="text"></v-input-field>
@@ -19,11 +19,10 @@ const { messages, fetchMessages } = useMeassages()
 const route = useRoute()
 const text = ref(null)
 async function sendMessage() {
-  console.log('sending')
   await chat.createMessage(route.params.id, { text: text.value })
-  text.value = ""
+  text.value = ''
   //Здесь наверное должен быть вебсокет, прослушивающий апдейт и обновляющий чат
-  fetchMessages();
+  fetchMessages()
 }
 </script>
 <style lang="scss">
