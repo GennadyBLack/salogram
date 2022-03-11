@@ -22,7 +22,7 @@ export default {
     },
   },
 
-  async beforeCreate() {
+  async mounted() {
     await fetchCurrentUser()
   },
 }

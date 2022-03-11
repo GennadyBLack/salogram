@@ -81,21 +81,20 @@ exports.createChat = async (req, res) => {
       //хз работает ли тут throw
       throw new Error("Choose person to start a chat");
     }
-    const isChatExist = await Chat.findOne({
-      // include: { model:User , { where: { id: req.body.current } } },
-      include: {
-        model: User,
-
-        where: {
-          id: [req.body.current, req.body.person],
-        },
+    const isChatExist = await Chat.findAll({
+      where: {
+        title: [
+          `${req.body.person}.${req.body.current}`,
+          `${req.body.current}.${req.body.person}`,
+        ],
       },
     });
-    if (isChatExist) {
-      res.status(400).send("Chat with this person exist");
+    console.log(isChatExist, "isChatExist=======================");
+    if (isChatExist.length > 0) {
+      res.status(420).send("Chat already exists");
       return;
     }
-    console.log(isChatExist, "isChatExist=======================");
+
     //Проверка на существующий чат
     //Ищем в userChats чат, в котором есть оба id. Если такой есть, выкидываем ошибку.
     // if (!req?.body.person) {

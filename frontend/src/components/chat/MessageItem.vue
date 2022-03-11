@@ -16,4 +16,26 @@ const created_at = computed(() =>
 )
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.message {
+  width: auto;
+  border: 1px solid gray;
+  display: block;
+  width: fit-content;
+  padding: 0.3rem 0.7rem;
+  margin: 0.3rem 0;
+  border-radius: 7px;
+  &-date {
+    font-size: 0.8rem;
+    color: #858585;
+  }
+}
+.message.right {
+  align-self: end;
+  text-align: end;
+  background-color: rgba(80, 121, 243, 0.99);
+}
+.message.left {
+  background-color: rgba(122, 220, 158, 0.63);
+}
+</style>

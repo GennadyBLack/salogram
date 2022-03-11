@@ -6,12 +6,13 @@ import { setCurrentUser } from '../CurrentUserComposable'
 export default () => {
   const router = useRouter()
 
-  const logout = () => {
+  const logout = async () => {
     //set null token
     saveToken()
     setNotice('Are you logout')
+    //Навигации асинхронные, поэтому выкидываем юзера после эвейта роута
+    await router.push('login')
     setCurrentUser(null)
-    router.push('login')
   }
 
   return {

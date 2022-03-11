@@ -14,7 +14,10 @@ export default () => {
   }
 
   onMounted(async () => {
-    await fetchMessages()
+    if (id.value) {
+      alert(id.value)
+      await fetchMessages()
+    }
   })
 
   watch(
@@ -28,5 +31,5 @@ export default () => {
     { deep: true }
   )
 
-  return { messages, fetchMessages }
+  return { messages: computed(() => messages.value.reverse()), fetchMessages }
 }

@@ -1,11 +1,11 @@
 <template>
-  <div class="messages-wrapper">
+  <div class="messages-wrapper" v-if="route.params.id">
     <div class="messages">
       <MessageItem
         v-for="message in messages"
         :key="message.id"
         :message="message"
-        :side="`${message.user.id == current_user.id ? 'left' : 'right'}`"
+        :side="`${message.user.id == current_user.id ? 'right' : 'left'}`"
       />
     </div>
     <form class="message-form d-flex" @submit.prevent="sendMessage">
@@ -13,6 +13,7 @@
       <button class="col-2" type="submit">Отправить</button>
     </form>
   </div>
+  <div v-else class="nomessage">Выберите чат позязя</div>
 </template>
 
 <script setup>
@@ -54,6 +55,14 @@ async function sendMessage() {
   width: 63%;
   position: fixed;
   margin-top: 1rem;
+}
+.nomessage {
+  background: linear-gradient(#70ef67, #ff961f);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .text-field {
   padding: 0.5rem 0.5rem;
