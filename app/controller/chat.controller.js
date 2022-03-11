@@ -80,11 +80,15 @@ exports.createChat = async (req, res) => {
       //хз работает ли тут throw
       throw new Error("Choose person to start a chat");
     }
+    const isChatExist = await Chat.findOne({
+      // where: { userId: [req.body.current, req.body.person] },
+    });
+    console.log(isChatExist);
     //Проверка на существующий чат
     //Ищем в userChats чат, в котором есть оба id. Если такой есть, выкидываем ошибку.
-    // if(!req?.body.person) {
+    // if (!req?.body.person) {
     //   //хз работает ли тут throw
-    //   throw new Error("Choose person to start a chat")
+    //   throw new Error("Choose person to start a chat");
     // }
     const chat = await Chat.create({
       title: `${req.body.current}.${req.body.person}`,
@@ -93,7 +97,7 @@ exports.createChat = async (req, res) => {
     chat.save();
     res.status(200).send(chat);
   } catch (error) {
-    req.status(400).send("error man");
+    res.status(400).send("error man");
     console.log(error, "ERROR FROM USER CONROLLER");
   }
 };
