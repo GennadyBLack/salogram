@@ -29,9 +29,11 @@ const { messages, fetchMessages } = useMeassages()
 const route = useRoute()
 const text = ref(null)
 const isTyping = ref(false)
-socketSub('typing', () => {
-  console.log('istyping')
-  isTyping.value = true
+socketSub('typing', (arg) => {
+  console.log(arg, 'ARGS')
+  if (arg.chatId === route.params.id) {
+    isTyping.value = true
+  }
 })
 async function sendMessage() {
   await chat.createMessage(route.params.id, { text: text.value })
