@@ -62,6 +62,25 @@ io.on("connection", function (socket) {
   console.log(socket.connected);
   console.log("A user with ID: " + socket.id + " connected");
   console.log("Made socket connection");
+  socket.on("typing", (data) => {
+    console.log(data, "socket Data");
+    socket.broadcast.emit("typing", data);
+  });
+  socket.on("stopTyping", () => {
+    socket.broadcast.emit("stopTyping");
+  });
+  socket.on("joined", async (id) => {
+    socket.broadcast.emit("joined", id);
+  });
+  socket.on("leave", (id) => {
+    socket.broadcast.emit("leave", id);
+  });
+  socket.on("sendMessage", (message) => {
+    socket.broadcast.emit("sendMessage", message);
+  });
+  socket.on("disconnect", function () {
+    console.log("A user disconnected");
+  });
 });
 
 // const app = require("express")();
@@ -76,13 +95,13 @@ io.on("connection", function (socket) {
 // io.on("connection", function (socket) {
 //   console.log(io.sockets.connected);
 //   console.log("A user with ID: " + socket.id + " connected");
-// socket.on("disconnect", function () {
+//   socket.on("disconnect", function () {
 //     console.log("A user with ID: " + socket.id + " disconnected");
 //   });
-// // More Socket listening here.
+//   // More Socket listening here.
 //   // if (io.sockets.connected) console.log(io.sockets.connected);
 //   // socket.emit("connections", Object.keys(io.sockets.connected).length);
-// socket.on("chat-message", async (message) => {
+//   socket.on("chat-message", async (message) => {
 //     const data = {
 //       message: message.message,
 //       user_id: socket.id,
@@ -92,13 +111,13 @@ io.on("connection", function (socket) {
 //     const messageData = await db.storeUserMessage(data);
 //     socket.broadcast.emit("chat-message", message);
 //   });
-// socket.on("typing", (data) => {
+//   socket.on("typing", (data) => {
 //     socket.broadcast.emit("typing", data);
 //   });
-// socket.on("stopTyping", () => {
+//   socket.on("stopTyping", () => {
 //     socket.broadcast.emit("stopTyping");
 //   });
-// socket.on("joined", async (name) => {
+//   socket.on("joined", async (name) => {
 //     let messageData = null;
 //     const data = {
 //       name,
@@ -111,7 +130,7 @@ io.on("connection", function (socket) {
 //     // console.log(messageData);
 //     socket.broadcast.emit("joined", messageData);
 //   });
-// socket.on("leave", (data) => {
+//   socket.on("leave", (data) => {
 //     socket.broadcast.emit("leave", data);
 //   });
 // });

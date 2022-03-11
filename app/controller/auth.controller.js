@@ -68,7 +68,6 @@ exports.me = async (req, res) => {
       where: { id: req.user.id },
       include: "chats",
     });
-    console.log(user, "OTVET");
     res.status(200).json({ user: user });
   } catch (error) {
     res.status(500).json({ error: error });

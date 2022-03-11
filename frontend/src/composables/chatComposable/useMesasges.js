@@ -15,7 +15,6 @@ export default () => {
 
   onMounted(async () => {
     if (id.value) {
-      alert(id.value)
       await fetchMessages()
     }
   })

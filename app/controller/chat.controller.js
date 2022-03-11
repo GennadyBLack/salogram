@@ -57,10 +57,8 @@ exports.delete = (req, res) => {
 
 exports.createMessage = (req, res) => {
   try {
-    console.log(req.params, "REQ");
     Chat.findByPk(req.params.chatId)
       .then((Chat) => {
-        console.log(Chat, "CHAAAT");
         Chat.createMessage({
           ...req.body,
           userId: req.user.id,
@@ -89,7 +87,7 @@ exports.createChat = async (req, res) => {
         ],
       },
     });
-    console.log(isChatExist, "isChatExist=======================");
+    // console.log(isChatExist, "isChatExist=======================");
     if (isChatExist.length > 0) {
       res.status(420).send("Chat already exists");
       return;

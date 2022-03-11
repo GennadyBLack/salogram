@@ -1,44 +1,32 @@
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { getToken } from '@/helpers/Utils/localStorageHelper'
 import { io } from 'socket.io-client'
 
-export default () => {
-  const socket = ref(null)
+export const socket = ref(null)
 
-  const iniOptions = {
-    // forceNew: true,
-    // reconnectionDelayMax: 10000,
-    reconnection: true,
-    auth: {
-      token: getToken(),
-    },
+const iniOptions = {
+  // forceNew: true,
+  // reconnectionDelayMax: 10000,
+  reconnection: true,
+  auth: {
+    token: getToken(),
+  },
+}
+
+export const initSocket = (options = iniOptions) => {
+  try {
+    socket.value = null
+    socket.value = io('http://localhost:8081', options)
+    console.log(socket.value)
+  } catch (error) {
+    console.log('error from socket', error)
   }
+}
 
-  const initSocket = (options = iniOptions) => {
-    try {
-      socket.value = null
-      if (socket.value) {
-        console.log(socket.value, 'socketvalue')
-      }
-      const token = getToken()
-      socket.value = io('http://localhost:8081', options)
-      console.log(socket.value)
-    } catch (error) {
-      console.log('error from socket', error)
-    }
-  }
+export const socketEmit = (name, options = 'sdsd') => {
+  socket.value.emit(`${name}`, options)
+}
 
-  const socketEmit = (name, options = 'sdsd') => {
-    socket.value.emit(`${name}`, options)
-  }
-
-  onMounted(async () => {
-    await initSocket()
-  })
-
-  return {
-    socket,
-    initSocket,
-    socketEmit,
-  }
+export const socketSub = (name, listener) => {
+  socket.value.on(`${name}`, listener)
 }

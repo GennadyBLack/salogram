@@ -7,6 +7,7 @@
 <script>
 import { fetchCurrentUser } from './composables/CurrentUserComposable/index'
 import Errors from './components/transitions/Errors'
+import { initSocket, socket } from './composables/socketComposables'
 import DefaultLayout from './layouts/DefaultLayout.vue'
 import AuthLayout from './layouts/AuthLayout.vue'
 export default {
@@ -23,6 +24,8 @@ export default {
   },
 
   async mounted() {
+    initSocket()
+    console.log(socket, 'SUCKIT')
     await fetchCurrentUser()
   },
 }

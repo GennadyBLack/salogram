@@ -21,12 +21,7 @@ export default () => {
       .then(async (res) => {
         saveToken(res.data.token),
           setNotice('Login successfull', 'success_message')
-        await fetchCurrentUser(
-          {
-            headers: { Authorization: `Token ${res.data.token}` },
-          },
-          redirect
-        )
+        await fetchCurrentUser({}, redirect)
       })
       .catch(() => {
         setNotice('Login error')
