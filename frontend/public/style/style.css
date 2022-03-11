@@ -470,7 +470,7 @@ body {
   background-color: #aaa; /* or add it to the track */
 }
 *::-webkit-scrollbar-thumb {
-  background: rgb(255, 255, 255);
+  background: rgb(63, 41, 41);
 }
 
 .drop-zone::-webkit-scrollbar-thumb {

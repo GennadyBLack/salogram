@@ -1,5 +1,5 @@
 <template>
-  <div class="form main-window">
+  <div class="form w-50 main-window">
     <div class="wrapper chat">
       <div class="col-4 chat-menu">
         <ul>
@@ -41,7 +41,6 @@ const { chats } = userChats()
   border-bottom: 1px solid gray;
   list-style-type: none; /* Убираем маркеры */
   padding: 1rem;
-  background: #eee;
 }
 .main-li:hover {
   opacity: 1;
@@ -51,7 +50,6 @@ const { chats } = userChats()
   min-height: 50vh;
   height: auto;
   border: 1px solid #16a149;
-  background: white;
   color: black;
   padding: 1rem;
 }
@@ -62,18 +60,25 @@ const { chats } = userChats()
 .wrapper {
   box-sizing: border-box;
   width: 100%;
+  min-height: 50vh;
 }
 .chat {
-  max-height: 40rem;
+  min-height: 35rem;
   padding: 2rem;
   &-menu {
+    border-right: 1px solid white;
+    height: 50vh;
+    overflow-x: auto;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
   }
   &-messages {
+    height: 50vh;
+    min-height: 100%;
     max-height: 100%;
+    border-radius: 3px;
     /*overflow: auto;*/
   }
 }

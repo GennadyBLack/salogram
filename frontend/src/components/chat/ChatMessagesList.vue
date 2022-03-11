@@ -1,18 +1,26 @@
 <template>
   <div class="messages-wrapper">
     <div class="messages">
-      <li v-for="message in messages" :key="message.id">{{ message.text }}</li>
+      <MessageItem
+        v-for="message in messages"
+        :key="message.id"
+        :message="message"
+        :side="`${message.user.id == current_user.id ? 'left' : 'right'}`"
+      />
     </div>
     <form class="message-form d-flex" @submit.prevent="sendMessage">
-      <input class="col-9 text-field" v-model="text">
+      <input class="col-9 text-field" v-model="text" />
       <button class="col-2" type="submit">Отправить</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import MessageItem from './MessageItem.vue'
 import useMeassages from '../../composables/chatComposable/useMesasges'
+
+import { current_user } from '../../composables/CurrentUserComposable/index'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import chat from '@/api/chat'
 const { messages, fetchMessages } = useMeassages()
@@ -31,13 +39,20 @@ async function sendMessage() {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  padding: 0.5rem
+  padding: 0.5rem;
+  border-radius: 3px;
+  position: relative;
 }
 .messages {
   height: 85%;
   display: block;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
 }
 .message-form {
+  width: 63%;
+  position: fixed;
   margin-top: 1rem;
 }
 .text-field {
