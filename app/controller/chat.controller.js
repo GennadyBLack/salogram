@@ -1,5 +1,6 @@
 const db = require("../config/db.config.js");
 const Chat = db.chat;
+const User = db.user;
 
 // FETCH all boards
 exports.findAll = (req, res) => {
@@ -81,15 +82,27 @@ exports.createChat = async (req, res) => {
       throw new Error("Choose person to start a chat");
     }
     const isChatExist = await Chat.findOne({
-      // where: { userId: [req.body.current, req.body.person] },
+      // include: { model:User , { where: { id: req.body.current } } },
+      include: {
+        model: User,
+
+        where: {
+          id: [req.body.current, req.body.person],
+        },
+      },
     });
-    console.log(isChatExist);
+    if (isChatExist) {
+      res.status(400).send("Chat with this person exist");
+      return;
+    }
+    console.log(isChatExist, "isChatExist=======================");
     //Проверка на существующий чат
     //Ищем в userChats чат, в котором есть оба id. Если такой есть, выкидываем ошибку.
     // if (!req?.body.person) {
     //   //хз работает ли тут throw
     //   throw new Error("Choose person to start a chat");
     // }
+
     const chat = await Chat.create({
       title: `${req.body.current}.${req.body.person}`,
     });
