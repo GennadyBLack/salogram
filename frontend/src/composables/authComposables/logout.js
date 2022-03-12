@@ -11,8 +11,9 @@ export default () => {
     saveToken()
     setNotice('Are you logout')
     //Навигации асинхронные, поэтому выкидываем юзера после эвейта роута
-    await router.push('login')
+
     setCurrentUser(null)
+    await router.push('login')
   }
 
   return {

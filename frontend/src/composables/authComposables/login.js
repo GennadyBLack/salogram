@@ -13,8 +13,8 @@ export default () => {
   const editField = (name, value) => {
     login_form.value[name] = value
   }
-  const redirect = () => {
-    router.push({ name: 'main' })
+  const redirect = async () => {
+    await router.push({ name: 'main' })
   }
   const login = async () => {
     await sendLoginForm(login_form.value)

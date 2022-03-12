@@ -3,10 +3,9 @@
     <div class="wrapper chat">
       <div class="col-4 chat-menu">
         <ul>
-          <li v-for="chat in chats" :key="chat.id">
+          <li v-for="chat in chats" :key="chat.id" class="chat-link">
             <template v-for="user in chat.users"
               ><router-link
-                class="chat-link"
                 v-if="current_user.id !== user.id"
                 :key="user.id"
                 :to="{ name: 'current_chat', params: { id: chat.id } }"
@@ -56,6 +55,8 @@ const { chats } = userChats()
 .chat-link {
   text-decoration: none;
   color: black;
+  height: 2rem;
+  display: block;
 }
 .wrapper {
   box-sizing: border-box;
@@ -81,5 +82,8 @@ const { chats } = userChats()
     border-radius: 3px;
     /*overflow: auto;*/
   }
+}
+.form {
+  margin: 2% auto;
 }
 </style>

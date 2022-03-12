@@ -2,7 +2,7 @@
 // Model.findAll({
 //     attributes: ['foo', 'bar'],
 // })  SELECT foo, bar FROM ...;
-
+const paginator = require("../helpers/paginationHelpers");
 const db = require("../config/db.config.js");
 const User = db.user;
 const Chat = db.chat;
@@ -23,12 +23,19 @@ const Chat = db.chat;
 // 	})
 // };
 
-// FETCH all users
+// FETCH all users const test = await User.findAndCountAll()
 exports.findAll = (req, res) => {
-  User.findAll({ include: "chats" })
+  //paginator
+  const { page } = req.query;
+  const { limit, offset } = paginator.getPagination(page);
+  //query
+  var condition = { include: "chats" };
+
+  User.findAndCountAll({ limit, offset, ...condition })
     .then((users) => {
       // Send all tasks to Client
-      res.send(users);
+      const response = paginator.getPagingData(users, page, limit);
+      res.send(response);
     })
     .catch((err) => {
       res.status(500).send("Error -> " + err);

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="users-list">
-      <div class="users-list__item" v-for="user in test" :key="user.id">
+      <div class="users-list__item" v-for="user in test?.data" :key="user.id">
         <div class="user-list__title">{{ user.username }}</div>
         <button
           @click="create_chat(user.id)"
@@ -10,7 +10,6 @@
         >
           Create chat
         </button>
-        {{ user.chats }}
       </div>
     </div>
 
@@ -38,9 +37,18 @@ const create_chat = async (personId) => {
 }
 </script>
 <style lang="scss">
-.test {
-  &-testus {
-    color: red;
+.users-list {
+  display: flex;
+  flex-wrap: wrap;
+  background: #eee;
+  border-radius: 3px;
+  padding: 1rem;
+  margin: 1rem;
+  &__item {
+    background: rgb(172, 158, 158);
+    border-radius: 3px;
+    padding: 1rem;
+    margin: 1rem;
   }
 }
 </style>
