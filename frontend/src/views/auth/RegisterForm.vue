@@ -1,6 +1,6 @@
 <template class="wrapper">
   <v-form v-slot="{ handleSubmit }">
-    <div class="form w-40">
+    <div class="form card w-40">
       <div class="row">
         <v-input-field
           v-model="register_form.email"

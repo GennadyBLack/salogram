@@ -1,6 +1,6 @@
 <template>
   <spiner v-if="!board" />
-  <div class="form w-50" v-if="board">
+  <div class="form card w-50" v-if="board">
     <v-input-field
       v-model="board.title.val"
       :rules="{ required: true }"

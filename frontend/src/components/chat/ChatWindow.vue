@@ -1,5 +1,5 @@
 <template>
-  <div class="form w-50 main-window">
+  <div class="card w-50 main-window">
     <div class="wrapper chat">
       <div class="col-4 chat-menu">
         <ul>
