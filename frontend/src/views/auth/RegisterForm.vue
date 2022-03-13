@@ -1,45 +1,50 @@
 <template class="wrapper">
   <v-form v-slot="{ handleSubmit }">
-    <div class="form card w-40">
-      <div class="row">
-        <v-input-field
-          v-model="register_form.email"
-          :rules="{ required: true }"
-          :placeholder="'Логин'"
-          name="mail"
-          :class="'col-12 form-field'"
-          label="Логин: "
-        />
-      </div>
-      <div class="row">
-        <v-input-field
-          v-model="register_form.password"
-          :rules="{ required: true }"
-          :placeholder="'Пароль'"
-          name="password"
-          :class="'col-12 form-field'"
-          label="Пароль: "
-        />
-      </div>
+    <base-card>
+      <div class="form">
+        <div class="row">
+          <v-input-field
+            v-model="register_form.email"
+            :rules="{ required: true }"
+            :placeholder="'Логин'"
+            name="mail"
+            :class="'col-12 form-field'"
+            label="Логин: "
+            mode="underline"
+          />
+        </div>
+        <div class="row">
+          <v-input-field
+            v-model="register_form.password"
+            :rules="{ required: true }"
+            :placeholder="'Пароль'"
+            name="password"
+            :class="'col-12 form-field'"
+            label="Пароль: "
+            mode="underline"
+          />
+        </div>
 
-      <div class="row">
-        <v-input-field
-          v-model="register_form.username"
-          :rules="{ required: true }"
-          :placeholder="'Имя'"
-          name="password"
-          :class="'col-12 form-field'"
-          label="Имя: "
-        />
-      </div>
+        <div class="row">
+          <v-input-field
+            v-model="register_form.username"
+            :rules="{ required: true }"
+            :placeholder="'Имя'"
+            name="password"
+            :class="'col-12 form-field'"
+            label="Имя: "
+            mode="underline"
+          />
+        </div>
 
-      <div class="form-btns">
-        <button @click="setDataForm" class="btn form-field">test</button>
-        <button @click="handleSubmit(register)" class="btn form-field">
-          Register
-        </button>
+        <div class="controls">
+          <base-button @click="setDataForm" extend-class="lg" mode="outline">test</base-button>
+          <base-button @click="handleSubmit(register)" extend-class="lg" mode="full">
+            Register
+          </base-button>
+        </div>
       </div>
-    </div>
+    </base-card>
   </v-form>
 </template>
 <script setup>

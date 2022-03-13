@@ -19,6 +19,8 @@
         :maska="maska"
         :modelValue="model"
         :textarea="textarea"
+        :extend-class="extendClass"
+        :mode="mode"
       />
       <div class="input-warning">{{ errorMessage }}</div>
     </Field>
@@ -39,8 +41,14 @@ export default {
       type: [String],
       default: 'text',
     },
+    mode: {
+      type: [String],
+    },
     nameError: {
       type: [String, Number],
+    },
+    extendClass: {
+      type: [String],
     },
     rules: {
       type: [String, Object, Function],
@@ -85,4 +93,6 @@ export default {
 .validation_input {
   margin-top: 10px;
 }
+
+
 </style>

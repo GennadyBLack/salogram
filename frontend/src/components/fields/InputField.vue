@@ -12,6 +12,7 @@
       :type="type"
       :disabled="disabled"
       :style="{ height: `${col * 51}px` }"
+      :class="extendClass"
     ></textarea>
     <!-- v-maska="maska" -->
     <input
@@ -22,7 +23,8 @@
       :placeholder="placeholder"
       :type="type"
       :disabled="disabled"
-      :style="{ width: `${col * 35}px` }"
+      :class="[mode,extendClass]"
+
     />
   </div>
 </template>
@@ -38,6 +40,12 @@ export default {
   },
   props: {
     type: {
+      type: [String],
+    },
+    extendClass: {
+      type: [String],
+    },
+    mode: {
       type: [String],
     },
     name: {
@@ -91,7 +99,20 @@ export default {
 textarea {
   padding-top: 10px !important;
 }
+label {
+  color: #2c2c2c;
+}
 .input {
   border-radius: 0.4rem;
 }
+.underline {
+  background: inherit;
+  border: none;
+  border-bottom: 1px solid #eee;
+}
+.input-wrapper label {
+  margin-right: 10px;
+  color: #eee;
+}
+
 </style>
