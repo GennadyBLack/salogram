@@ -1,7 +1,9 @@
 <template>
   <div class="messages-wrapper" v-if="route.params.id">
     <div class="messages">
-      <div v-if="isTyping" class="types">Пользователь печатает</div>
+      <div v-if="isTyping" class="types">
+        <pencil />
+      </div>
       <MessageItem
         v-for="message in messages"
         :key="message.id"
@@ -18,6 +20,7 @@
 </template>
 
 <script setup>
+import Pencil from '../../components/chat/Pencil.vue'
 import MessageItem from './MessageItem.vue'
 import useMeassages from '../../composables/chatComposable/useMesasges'
 import { socketEmit, socketSub } from '../../composables/socketComposables'
@@ -66,7 +69,7 @@ function socketType() {
   flex-direction: column-reverse;
 }
 .message-form {
-  width: 63%;
+  width: 43%;
   position: fixed;
   margin-top: 1rem;
 }
@@ -89,5 +92,42 @@ function socketType() {
     outline: 1px solid dodgerblue;
     border: 1px solid dodgerblue;
   }
+}
+.pencil {
+  position: relative;
+  width: 0.35em;
+  height: 0.8em;
+  background: #2c2c2c;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  font-size: 1.4em;
+}
+
+.pencil:before {
+  content: '';
+  position: absolute;
+  top: -0.35em;
+  left: 0;
+  width: 0.35em;
+  height: 0.3em;
+  background: #2c2c2c;
+  border-radius: 0.1em;
+}
+
+.pencil:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0.85em;
+  left: 0;
+  border: solid 0.2em #2c2c2c;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top: solid 0.45em #2c2c2c;
 }
 </style>
