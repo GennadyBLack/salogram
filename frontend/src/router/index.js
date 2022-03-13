@@ -45,35 +45,6 @@ const routes = [
     ],
   },
 
-  // {
-  //   path: '/board/:id',
-  //   name: 'board',
-  //   component: Board,
-  //   meta: { layout: 'DefaultLayout', requiresAuth: true },
-  //   props: true,
-  // },
-  // {
-  //   path: '/boards',
-  //   name: 'board_list',
-  //   component: BoardsList,
-  //   meta: { layout: 'DefaultLayout', requiresAuth: true },
-  //   props: true,
-  // },
-  // {
-  //   path: '/board_edit/:id',
-  //   name: 'board_edit',
-  //   component: BoardEdit,
-  //   meta: { layout: 'DefaultLayout', requiresAuth: true },
-  //   props: true,
-  // },
-  // ,
-  // {
-  //   path: '/board_create',
-  //   name: 'board_create',
-  //   component: createBoardForm,
-  //   meta: { layout: 'DefaultLayout', requiresAuth: true },
-  //   props: true,
-  // },
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',

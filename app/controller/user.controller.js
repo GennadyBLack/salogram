@@ -6,22 +6,6 @@ const paginator = require("../helpers/paginationHelpers");
 const db = require("../config/db.config.js");
 const User = db.user;
 const Chat = db.chat;
-// Post a Task
-// exports.create = (req, res) => {
-// 	console.log(req.body)
-// 	const {title,description,active} = req.body
-// 	// Save to PostgreSQL database
-// 	Task.create({
-// 		title: title,
-// 		description: description,
-// 		active:active
-// 	}).then(Task => {
-// 		// Send created Task to client
-// 		res.send(Task);
-// 	}).catch(err => {
-// 		res.status(500).send("Error -> " + err);
-// 	})
-// };
 
 // FETCH all users const test = await User.findAndCountAll()
 exports.findAll = (req, res) => {

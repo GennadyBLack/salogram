@@ -1,5 +1,5 @@
 <template>
-  <div class="form w-50 main-window">
+  <div class="">
     <div class="wrapper chat">
       <div class="col-4 chat-menu">
         <ul>
@@ -64,6 +64,9 @@ const { chats } = userChats()
   min-height: 50vh;
 }
 .chat {
+  margin: 10px auto;
+  width: 70%;
+  background: #eee;
   min-height: 35rem;
   padding: 2rem;
   &-menu {
