@@ -1,5 +1,3 @@
-const paganator = {};
-
 exports.getPagination = (page) => {
   //максимальное количество записей за раз
   const limit = 25;
