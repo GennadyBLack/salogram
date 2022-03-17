@@ -1,10 +1,11 @@
 <template>
   <div class="messages-wrapper" v-if="route.params.id">
-    <div class="messages">
+    <div class="messages" ref="windowComponent">
       <div v-if="isTyping" class="types">
         <pencil />
       </div>
       <MessageItem
+        ref="scrollComponent"
         v-for="message in messages"
         :key="message.id"
         :message="message"
@@ -31,13 +32,38 @@ import MessageItem from './MessageItem.vue'
 import useMeassages from '../../composables/chatComposable/useMesasges'
 import { socketEmit, socketSub } from '../../composables/socketComposables'
 import { current_user } from '../../composables/CurrentUserComposable/index'
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted, defineExpose } from 'vue'
 import { useRoute } from 'vue-router'
 import chat from '@/api/chat'
 const { messages, fetchMessages } = useMeassages()
 const route = useRoute()
 const text = ref(null)
 const isTyping = ref(false)
+const scrollComponent = ref([])
+const windowComponent = ref(null)
+defineExpose({ scrollComponent })
+onMounted(() => {
+  console.log(windowComponent.value, 'windowComponent')
+  console.log(scrollComponent.value, 'scrollComponent')
+  windowComponent.value.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  windowComponent.value.removeEventListener('scroll', handleScroll)
+})
+
+const handleScroll = (e) => {
+  console.log(e, 'handleScroll')
+  let element = scrollComponent.value
+
+  console.log(windowComponent.value.innerHeight, 'windowComponent')
+  console.log(element.getBoundingClientRect().top, 'element')
+
+  if (element.getBoundingClientRect().top < windowComponent.value.innerHeight) {
+    fetchMessages({ params: { page: 1 } })
+  }
+}
+
 socketSub('typing', (arg) => {
   console.log(arg, 'ARGS')
   if (arg.chatId === route.params.id) {
@@ -47,7 +73,6 @@ socketSub('typing', (arg) => {
 
 socketSub('stopTyping', (arg) => {
   if (arg.chatId === route.params.id) {
-    console.log('STOPTYPING SUKAAA')
     isTyping.value = false
   }
 })

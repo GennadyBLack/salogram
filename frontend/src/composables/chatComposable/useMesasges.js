@@ -10,7 +10,9 @@ export default () => {
   const id = computed(() => route.params.id)
 
   const fetchMessages = async (config = initFilter) => {
-    messages.value = (await messagesApi.getMessagesList(id.value, config)).data
+    const fetched = (await messagesApi.getMessagesList(id.value, config)).data
+      .data
+    messages.value.push(...fetched)
   }
 
   onMounted(async () => {
@@ -30,5 +32,5 @@ export default () => {
     { deep: true }
   )
 
-  return { messages: computed(() => messages.value.reverse()), fetchMessages }
+  return { messages: computed(() => messages.value), fetchMessages }
 }

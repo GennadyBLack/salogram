@@ -1,16 +1,36 @@
 const db = require("../config/db.config.js");
+const paginator = require("../helpers/paginationHelpers");
 const Message = db.message;
 const Chat = db.chat;
 
 // FETCH all boards
 exports.findAll = async (req, res) => {
-  await Message.findAll({
+  // await Message.findAll({
+  //   where: { chatId: req.params.chatId },
+  //   include: "user",
+  // })
+  //   .then((messages) => {
+  //     // Send all boards to Client
+  //
+  //     res.status(200).send(messages);
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).send("Error -> " + err);
+  //   });
+  //paginator
+  const { page } = req.query;
+  const { limit, offset } = paginator.getPagination(page);
+  //query
+  var condition = {
     where: { chatId: req.params.chatId },
+    order: [["id", "DESC"]],
     include: "user",
-  })
+  };
+  await Message.findAndCountAll({ limit, offset, ...condition })
     .then((messages) => {
-      // Send all boards to Client
-      res.status(200).send(messages);
+      // Send all tasks to Client
+      const response = paginator.getPagingData(messages, page, limit);
+      res.send(response);
     })
     .catch((err) => {
       res.status(500).send("Error -> " + err);
