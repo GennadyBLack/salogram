@@ -14,7 +14,7 @@
     <form class="message-form d-flex" @submit.prevent="sendMessage">
       <input
         class="col-9 text-field"
-        @keydown="socketType"
+        @keydown="socketStartType"
         @keyup="socketStopType"
         v-model="text"
       />
@@ -59,7 +59,7 @@ socketSub('sendMessage', (arg) => {
 async function sendMessage() {
   await chat.createMessage(route.params.id, { text: text.value })
   text.value = ''
-  //Здесь наверное должен быть вебсокет, прослушивающий апдейт и обновляющий чат
+
   socketEmit('stopTyping', {
     currentId: current_user.value.id,
     chatId: route.params.id,
@@ -75,12 +75,6 @@ function socketType() {
     currentId: current_user.value.id,
     chatId: route.params.id,
   })
-  setTimeout(() => {
-    socketEmit('typingOff', {
-      currentId: current_user.value.id,
-      chatId: route.params.id,
-    })
-  }, 3000)
 }
 const socketStopType = _.debounce(() => {
   console.log('stopping')
@@ -89,6 +83,14 @@ const socketStopType = _.debounce(() => {
     chatId: route.params.id,
   })
 }, 2000)
+
+const socketStartType = _.debounce(() => {
+  console.log('starttyping')
+  socketEmit('typing', {
+    currentId: current_user.value.id,
+    chatId: route.params.id,
+  })
+}, 600)
 </script>
 <style lang="scss">
 .messages-wrapper {
