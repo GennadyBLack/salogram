@@ -64,8 +64,8 @@ io.on("connection", function (socket) {
     console.log(data, "socket Data");
     socket.broadcast.emit("typing", data);
   });
-  socket.on("stopTyping", () => {
-    socket.broadcast.emit("stopTyping");
+  socket.on("stopTyping", (data) => {
+    socket.broadcast.emit("stopTyping", data);
   });
   socket.on("joined", async (id) => {
     socket.broadcast.emit("joined", id);
@@ -73,8 +73,8 @@ io.on("connection", function (socket) {
   socket.on("leave", (id) => {
     socket.broadcast.emit("leave", id);
   });
-  socket.on("sendMessage", (message) => {
-    socket.broadcast.emit("sendMessage", message);
+  socket.on("sendMessage", (data) => {
+    socket.broadcast.emit("sendMessage", data);
   });
   socket.on("disconnect", function () {
     console.log("A user disconnected");

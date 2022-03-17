@@ -12,7 +12,12 @@
       />
     </div>
     <form class="message-form d-flex" @submit.prevent="sendMessage">
-      <input class="col-9 text-field" @keyup="socketType" v-model="text" />
+      <input
+        class="col-9 text-field"
+        @keydown="socketType"
+        @keyup="socketStopType"
+        v-model="text"
+      />
       <button class="col-2" type="submit">Отправить</button>
     </form>
   </div>
@@ -20,6 +25,7 @@
 </template>
 
 <script setup>
+import _ from 'lodash'
 import Pencil from '../../components/chat/Pencil.vue'
 import MessageItem from './MessageItem.vue'
 import useMeassages from '../../composables/chatComposable/useMesasges'
@@ -38,10 +44,30 @@ socketSub('typing', (arg) => {
     isTyping.value = true
   }
 })
+
+socketSub('stopTyping', (arg) => {
+  if (arg.chatId === route.params.id) {
+    console.log('STOPTYPING SUKAAA')
+    isTyping.value = false
+  }
+})
+socketSub('sendMessage', (arg) => {
+  if (arg.chatId === route.params.id) {
+    fetchMessages()
+  }
+})
 async function sendMessage() {
   await chat.createMessage(route.params.id, { text: text.value })
   text.value = ''
   //Здесь наверное должен быть вебсокет, прослушивающий апдейт и обновляющий чат
+  socketEmit('stopTyping', {
+    currentId: current_user.value.id,
+    chatId: route.params.id,
+  })
+  socketEmit('sendMessage', {
+    chatId: route.params.id,
+  })
+
   fetchMessages()
 }
 function socketType() {
@@ -56,6 +82,13 @@ function socketType() {
     })
   }, 3000)
 }
+const socketStopType = _.debounce(() => {
+  console.log('stopping')
+  socketEmit('stopTyping', {
+    currentId: current_user.value.id,
+    chatId: route.params.id,
+  })
+}, 2000)
 </script>
 <style lang="scss">
 .messages-wrapper {
