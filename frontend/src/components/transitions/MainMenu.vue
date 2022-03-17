@@ -9,8 +9,8 @@
             }}</router-link>
           </div>
         </div>
-        {{ current_user?.id }}
         <div class="router-list__right">
+          Hi: {{ current_user?.username }}
           <button
             v-if="current_user?.id ? current_user?.id : null"
             @click="logout"

@@ -49,6 +49,12 @@ function socketType() {
     currentId: current_user.value.id,
     chatId: route.params.id,
   })
+  setTimeout(() => {
+    socketEmit('typingOff', {
+      currentId: current_user.value.id,
+      chatId: route.params.id,
+    })
+  }, 3000)
 }
 </script>
 <style lang="scss">
