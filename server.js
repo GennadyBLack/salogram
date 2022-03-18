@@ -1,6 +1,9 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+const tokenSecret = "my-token-secret";
+
 const cors = require("cors");
 // const socket = require("socket.io");
 const config = {
@@ -58,7 +61,41 @@ var server = http.listen(8081, function () {
 
 // Socket setup
 
+try {
+  io.use(function (socket, next) {
+    console.log(socket.handshake.auth.token);
+    if (socket.handshake.auth && socket.handshake.auth.token) {
+      jwt.verify(
+        socket.handshake.auth.token,
+        tokenSecret,
+        function (err, decoded) {
+          if (err) return next(new Error("Invalid JWT-Token"));
+
+          socket.userID = user_id;
+          socket.username = user_id;
+          socket.decoded = decoded;
+          next();
+        }
+      );
+    } else {
+      next(new Error("Authentication error"));
+    }
+  }).on("connection", function (socket) {
+    console.log(`User ID:${socket.userID} connected`);
+    socket.join(`personal:${socket.userID}`); // подключаем пользователя к своей комнате.
+    socket.emit(`connected`, { id: socket.userID });
+
+    socket.on("disconnect", function () {
+      console.log(`User ID:${socket.userID} disconnected`);
+    });
+  });
+} catch ($ex) {
+  console.log($ex);
+} finally {
+}
+
 io.on("connection", function (socket) {
+  let token = socket.handshake.auth.token;
   console.log("Made socket connection");
   socket.on("typing", (data) => {
     console.log(data, "socket Data");
