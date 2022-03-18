@@ -4,6 +4,9 @@ const chat = {
   getAllUserChat: (config = {}) => {
     return api.get('/me/chats', config)
   },
+  getChatById: (id, config = {}) => {
+    return api.get(`/chats/${id}`, config)
+  },
   deleteChatById: (id) => {
     return api.delete('/chats', { id })
   },

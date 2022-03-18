@@ -34,41 +34,48 @@ import { socketEmit, socketSub } from '../../composables/socketComposables'
 import { current_user } from '../../composables/CurrentUserComposable/index'
 import { ref, onMounted, onUnmounted, defineExpose } from 'vue'
 import { useRoute } from 'vue-router'
-import chat from '@/api/chat'
+import userChats from '../../composables/chatComposable'
+
 const { messages, fetchMessages } = useMeassages()
+const { fetchChatById } = userChats()
 const route = useRoute()
 const text = ref(null)
 const isTyping = ref(false)
 const scrollComponent = ref([])
 const windowComponent = ref(null)
+const chat = ref(null)
+chat.value = await fetchChatById(route.params.id)
+console.log(chat.value, 'chat')
 defineExpose({ scrollComponent })
-onMounted(() => {
-  console.log(windowComponent.value, 'windowComponent')
-  console.log(scrollComponent.value, 'scrollComponent')
-  windowComponent.value.addEventListener('scroll', handleScroll)
-})
 
-onUnmounted(() => {
-  windowComponent.value.removeEventListener('scroll', handleScroll)
-})
+// onMounted(() => {
+//   console.log(windowComponent.value, 'windowComponent')
+//   console.log(scrollComponent.value, 'scrollComponent')
+//   windowComponent.value.addEventListener('scroll', handleScroll)
+// })
+//
+// onUnmounted(() => {
+//   windowComponent.value.removeEventListener('scroll', handleScroll)
+// })
 
-const handleScroll = (e) => {
-  console.log(e, 'handleScroll')
-  let element = scrollComponent.value
-
-  console.log(windowComponent.value.innerHeight, 'windowComponent')
-  console.log(element.getBoundingClientRect().top, 'element')
-
-  if (element.getBoundingClientRect().top < windowComponent.value.innerHeight) {
-    fetchMessages({ params: { page: 1 } })
-  }
-}
+// const handleScroll = (e) => {
+//   console.log(e, 'handleScroll')
+//   let element = scrollComponent.value
+//
+//   console.log(windowComponent.value.innerHeight, 'windowComponent')
+//   console.log(element.getBoundingClientRect().top, 'element')
+//
+//   if (element.getBoundingClientRect().top < windowComponent.value.innerHeight) {
+//     fetchMessages({ params: { page: 1 } })
+//   }
+// }
 
 socketSub('typing', (arg) => {
   console.log(arg, 'ARGS')
-  if (arg.chatId === route.params.id) {
-    isTyping.value = true
-  }
+  // isTyping.value = true
+  // if (arg.chatId === route.params.id) {
+  //   isTyping.value = true
+  // }
 })
 
 socketSub('stopTyping', (arg) => {
@@ -87,6 +94,7 @@ async function sendMessage() {
 
   socketEmit('stopTyping', {
     currentId: current_user.value.id,
+    secondId: chat.users[1].id,
     chatId: route.params.id,
   })
   socketEmit('sendMessage', {

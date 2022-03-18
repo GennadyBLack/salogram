@@ -63,19 +63,19 @@ var server = http.listen(8081, function () {
 
 try {
   io.use(function (socket, next) {
-    console.log(socket.handshake.auth.token);
     if (socket.handshake.auth && socket.handshake.auth.token) {
       jwt.verify(
         socket.handshake.auth.token,
         tokenSecret,
-        function (err, decoded) {
+        function (err, response) {
           if (err) return next(new Error("Invalid JWT-Token"));
 
-          socket.userID = user_id;
-          socket.username = user_id;
-          socket.decoded = decoded;
+          socket.userID = response.data.id;
+          socket.username = response.data.username;
+          socket.decoded = response;
           next();
-        }
+        },
+        null
       );
     } else {
       next(new Error("Authentication error"));
@@ -84,7 +84,26 @@ try {
     console.log(`User ID:${socket.userID} connected`);
     socket.join(`personal:${socket.userID}`); // подключаем пользователя к своей комнате.
     socket.emit(`connected`, { id: socket.userID });
-
+    socket.on("typing", (data) => {
+      console.log(data, "socket Data");
+      io.to(`personal:${data.currentId}`).emit("typing", data);
+      // socket.broadcast.emit("typing", data);
+    });
+    socket.on("stopTyping", (data) => {
+      socket.broadcast.emit("stopTyping", data);
+    });
+    socket.on("joined", async (id) => {
+      socket.broadcast.emit("joined", id);
+    });
+    socket.on("leave", (id) => {
+      socket.broadcast.emit("leave", id);
+    });
+    socket.on("sendMessage", (data) => {
+      socket.broadcast.emit("sendMessage", data);
+    });
+    socket.on("disconnect", function () {
+      console.log("A user disconnected");
+    });
     socket.on("disconnect", function () {
       console.log(`User ID:${socket.userID} disconnected`);
     });
@@ -93,27 +112,27 @@ try {
   console.log($ex);
 } finally {
 }
-
-io.on("connection", function (socket) {
-  let token = socket.handshake.auth.token;
-  console.log("Made socket connection");
-  socket.on("typing", (data) => {
-    console.log(data, "socket Data");
-    socket.broadcast.emit("typing", data);
-  });
-  socket.on("stopTyping", (data) => {
-    socket.broadcast.emit("stopTyping", data);
-  });
-  socket.on("joined", async (id) => {
-    socket.broadcast.emit("joined", id);
-  });
-  socket.on("leave", (id) => {
-    socket.broadcast.emit("leave", id);
-  });
-  socket.on("sendMessage", (data) => {
-    socket.broadcast.emit("sendMessage", data);
-  });
-  socket.on("disconnect", function () {
-    console.log("A user disconnected");
-  });
-});
+//
+// io.on("connection", function (socket) {
+//   let token = socket.handshake.auth.token;
+//   console.log("Made socket connection");
+//   socket.on("typing", (data) => {
+//     console.log(data, "socket Data");
+//     socket.broadcast.emit("typing", data);
+//   });
+//   socket.on("stopTyping", (data) => {
+//     socket.broadcast.emit("stopTyping", data);
+//   });
+//   socket.on("joined", async (id) => {
+//     socket.broadcast.emit("joined", id);
+//   });
+//   socket.on("leave", (id) => {
+//     socket.broadcast.emit("leave", id);
+//   });
+//   socket.on("sendMessage", (data) => {
+//     socket.broadcast.emit("sendMessage", data);
+//   });
+//   socket.on("disconnect", function () {
+//     console.log("A user disconnected");
+//   });
+// });

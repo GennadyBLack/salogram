@@ -16,10 +16,7 @@ exports.findAll = (req, res) => {
 
 // // Find a Board by Id
 exports.findById = (req, res) => {
-  Chat.findOne({
-    where: { id: req.params.chatId },
-    include: { all: true, nested: true },
-  })
+  Chat.findByPk(req.params.chatId, { include: { all: true, nested: true } })
     .then((Chat) => {
       res.send(Chat);
     })

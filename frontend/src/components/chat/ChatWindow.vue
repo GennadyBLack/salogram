@@ -4,8 +4,8 @@
       <div class="col-4 chat-menu">
         <ul>
           <li v-for="chat in chats" :key="chat.id" class="chat-link">
-            <template v-for="user in chat.users"
-              ><router-link
+            <template v-for="user in chat.users">
+              <router-link
                 v-if="current_user.id !== user.id"
                 :key="user.id"
                 :to="{ name: 'current_chat', params: { id: chat.id } }"
