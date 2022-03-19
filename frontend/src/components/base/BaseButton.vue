@@ -16,7 +16,7 @@
     })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     button,a {
         padding: 1rem 2rem;
         border: none;
@@ -29,10 +29,10 @@
     }
     .outline {
         background: transparent;
-        border: 2px solid #708ab4;
+        border: 2px solid $btn-blue-sec;
     }
     .full {
-        background: #6180b1;
+        background: $btn-blue-pr;
         color: white;
     }
     .lg {

@@ -1,3 +1,5 @@
+@import "./vars.scss";
+
 .default-layout {
   background-image: url('../img/dev.jpg');
 }
@@ -15,11 +17,6 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
-
-h1 {
-  font-size: 2rem;
-  margin: 0.67rem 0;
-}
 
 hr {
   box-sizing: content-box; /* 1 */
@@ -42,21 +39,21 @@ label,
 input,
 a,
 p {
-  font-size: 1.6rem;
+  font-size: $normalfont;
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: $header1;
 }
 
 h2 {
-  font-size: 3.5rem;
+  font-size: $header2;
 }
 h3 {
-  font-size: 2.8rem;
+  font-size: $header3;
 }
 h4, h5 {
-  font-size: 2rem;
+  font-size: $header4;
 }
 
 .controls {

@@ -8,7 +8,13 @@ module.exports = {
       },
     },
   },
-
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `@import "./public/style/_vars.scss";`
+      }
+    }
+  },
   devServer: {
     port: 4200,
   },

@@ -22,7 +22,8 @@
             mode="underline"
           />
           <div class="controls">
-            <base-button @click="setDataForm" extend-class="lg" mode="full">Test</base-button>
+            <base-button @click="setDataForm" extend-class="lg" mode="full">Admin</base-button>
+            <base-button @click="setDataForm2" extend-class="lg" mode="full">Chatter</base-button>
             <base-button @click="handleSubmit(login)" extend-class="lg" mode="outline">
               Login
             </base-button>
@@ -39,6 +40,10 @@ const { login, login_form, editField } = useLogin()
 const setDataForm = () => {
   editField('email', 'adminus@mail.ru')
   editField('password', 'adminus')
+}
+const setDataForm2 = () => {
+  editField('email', 'p@gmail.com')
+  editField('password', '123')
 }
 </script>
 <style scoped>

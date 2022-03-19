@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import '../public/style/style.css'
+import '../public/style/style.scss'
 import { registerBaseComponents } from './helpers/Utils/registerGlobalComponents'
 import './plugins/vee-validate'
 import App from './App.vue'
