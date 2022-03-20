@@ -1,20 +1,22 @@
 <template>
-  <div>
+  <div class="main-body container">
     <div class="users-list">
-      <div class="users-list__item" v-for="user in test?.data" :key="user.id">
-        <div class="user-list__title">{{ user.username }}</div>
-        <button
-          @click="create_chat(user.id)"
-          class="user-list__button"
-          v-if="user.id !== current_user.id"
+      <base-list-item v-for="user in test?.data" :key="user.id" :item-text="user.username" :item-img="user?.image || null">
+      <template #actions  v-if="user.id !== current_user.id">
+        <base-button class="outline outline-green"
+                     @click="create_chat(user.id)"
         >
           Create chat
-        </button>
-      </div>
+        </base-button>
+      </template>
+
+      </base-list-item>
+    </div>
+    <div class="controls">
+      <base-button class="full full-blue" @click="sock">get all Chat</base-button>
+      <base-button class="full full-green" @click="chat">chat</base-button>
     </div>
 
-    <button @click="sock">get all Chat</button>
-    <button @click="chat">chat</button>
   </div>
 </template>
 
@@ -37,18 +39,21 @@ const create_chat = async (personId) => {
 }
 </script>
 <style lang="scss">
-.users-list {
-  display: flex;
-  flex-wrap: wrap;
-  background: #eee;
-  border-radius: 3px;
-  padding: 1rem;
-  margin: 1rem;
-  &__item {
-    background: rgb(172, 158, 158);
-    border-radius: 3px;
-    padding: 1rem;
-    margin: 1rem;
+  .main-body {
+    height: 95vh;
   }
-}
+/*.users-list {*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
+/*  background: #eee;*/
+/*  border-radius: 3px;*/
+/*  padding: 1rem;*/
+/*  margin: 1rem 0;*/
+/*  &__item {*/
+/*    background: rgb(172, 158, 158);*/
+/*    border-radius: 3px;*/
+/*    padding: 1rem;*/
+/*    margin: 1rem;*/
+/*  }*/
+/*}*/
 </style>

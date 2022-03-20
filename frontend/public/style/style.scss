@@ -1,5 +1,6 @@
 @import "./vars.scss";
 
+
 .default-layout {
   background-image: url('../img/dev.jpg');
 }
@@ -56,10 +57,14 @@ h4, h5 {
   font-size: $header4;
 }
 
+img {
+  width: 100%;
+  display: block;
+}
 .controls {
   display: flex;
   justify-content: space-between;
-  margin: 1.4rem 0 0 0;
+  margin: 1rem 0;
 }
 
 #app {
@@ -237,4 +242,9 @@ input:focus {
   height: 1.5rem;
   align-items: center;
   color: rgb(170, 52, 52);
+}
+
+.container {
+  width: 95%;
+  margin: 0 auto;
 }

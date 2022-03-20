@@ -29,12 +29,40 @@
     }
     .outline {
         background: transparent;
-        border: 2px solid $btn-blue-sec;
+
+        &-blue {
+            border: 2px solid $btn-blue-sec;
+        }
+        &-green {
+            border: 2px solid $btn-green-sec;
+        }
+        &-yellow {
+            border: 2px solid $btn-yellow-sec;
+        }
+        &:hover {
+            filter: brightness(90%);
+        }
     }
     .full {
-        background: $btn-blue-pr;
         color: white;
+        &-white {
+            background: white;
+            color: black
+        }
+        &-blue {
+            background: $btn-blue-pr;
+        }
+        &-green {
+            background: $btn-green-pr;
+        }
+        &-yellow {
+            background: $btn-yellow-pr;
+        }
+        &:hover {
+            filter: brightness(90%);
+        }
     }
+
     .lg {
       padding-left: 3rem;
       padding-right:3rem;
