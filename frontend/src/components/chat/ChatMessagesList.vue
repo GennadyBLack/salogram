@@ -37,15 +37,14 @@ import { useRoute } from 'vue-router'
 import userChats from '../../composables/chatComposable'
 
 const { messages, fetchMessages } = useMeassages()
-const { fetchChatById } = userChats()
+const { getChat, fetchChatById } = userChats()
 const route = useRoute()
 const text = ref(null)
 const isTyping = ref(false)
 const scrollComponent = ref([])
 const windowComponent = ref(null)
-const chat = ref(null)
-chat.value = await fetchChatById(route.params.id)
-console.log(chat.value, 'chat')
+fetchChatById(route.params.id)
+console.log(getChat, 'chat')
 defineExpose({ scrollComponent })
 
 // onMounted(() => {

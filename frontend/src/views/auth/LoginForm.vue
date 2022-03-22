@@ -22,9 +22,23 @@
             mode="underline"
           />
           <div class="controls">
-            <base-button @click="setDataForm" extend-class="lg" mode="full">Admin</base-button>
-            <base-button @click="setDataForm2" extend-class="lg" mode="full">Chatter</base-button>
-            <base-button @click="handleSubmit(login)" extend-class="lg" mode="outline">
+            <base-button
+              @click="setDataForm"
+              extend-class="full full-blue lg"
+              mode="full"
+              >Admin</base-button
+            >
+            <base-button
+              @click="setDataForm2"
+              extend-class="full full-green lg"
+              mode="full"
+              >Chatter</base-button
+            >
+            <base-button
+              @click="handleSubmit(login)"
+              extend-class="full full-yellow lg"
+              mode="outline"
+            >
               Login
             </base-button>
           </div>
@@ -52,8 +66,8 @@ const setDataForm2 = () => {
   flex-direction: column;
   justify-content: center;
 }
-  .form {
-    width: 50%;
-    margin: 0 auto;
-  }
+.form {
+  width: 50%;
+  margin: 0 auto;
+}
 </style>

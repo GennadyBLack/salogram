@@ -1,6 +1,8 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { socketSub, socketEmit } from '../socketComposables'
 import messagesApi from '../../api/message'
+import { current_user } from '../CurrentUserComposable'
 
 const initFilter = { limit: 10, page: 1 }
 
@@ -10,6 +12,9 @@ export default () => {
   const id = computed(() => route.params.id)
 
   const fetchMessages = async (config = initFilter) => {
+    socketEmit('openChat', {
+      chatId: id.value,
+    })
     const fetched = (await messagesApi.getMessagesList(id.value, config)).data
       .data
     messages.value.push(...fetched)

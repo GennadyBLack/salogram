@@ -82,8 +82,12 @@ try {
     }
   }).on("connection", function (socket) {
     console.log(`User ID:${socket.userID} connected`);
-    socket.join(`personal:${socket.userID}`); // подключаем пользователя к своей комнате.
+    socket.join(`notify:${socket.userID}`); // подключаем пользователя к своей комнате.
     socket.emit(`connected`, { id: socket.userID });
+    socket.on("openChat", (data) => {
+      socket.join(`personal:${data.chatId}`); // подключаем пользователя к своей комнате.
+      console.log(`Connected to personal chat ${data.chatId}`);
+    });
     socket.on("typing", (data) => {
       console.log(data, "socket Data");
       io.to(`personal:${data.currentId}`).emit("typing", data);
@@ -108,8 +112,8 @@ try {
       console.log(`User ID:${socket.userID} disconnected`);
     });
   });
-} catch ($ex) {
-  console.log($ex);
+} catch (e) {
+  console.log(e);
 } finally {
 }
 //
