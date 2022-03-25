@@ -27,6 +27,7 @@
 
 <script setup>
 import _ from 'lodash'
+import chat from '../../api/chat'
 import Pencil from '../../components/chat/Pencil.vue'
 import MessageItem from './MessageItem.vue'
 import useMeassages from '../../composables/chatComposable/useMesasges'
@@ -44,7 +45,6 @@ const isTyping = ref(false)
 const scrollComponent = ref([])
 const windowComponent = ref(null)
 fetchChatById(route.params.id)
-console.log(getChat, 'chat')
 defineExpose({ scrollComponent })
 
 // onMounted(() => {
@@ -70,7 +70,6 @@ defineExpose({ scrollComponent })
 // }
 
 socketSub('typing', (arg) => {
-  console.log(arg, 'ARGS')
   // isTyping.value = true
   // if (arg.chatId === route.params.id) {
   //   isTyping.value = true

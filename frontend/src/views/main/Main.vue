@@ -1,22 +1,34 @@
 <template>
   <div class="main-body container">
     <div class="users-list">
-      <base-list-item v-for="user in test?.data" :key="user.id" :item-text="user.username" :item-img="user?.image || null">
-      <template #actions  v-if="user.id !== current_user.id">
-        <base-button class="outline outline-green"
-                     @click="create_chat(user.id)"
-        >
-          Create chat
-        </base-button>
-      </template>
-
+      <base-list-item
+        v-for="user in test?.data"
+        :key="user.id"
+        :item-text="user.username"
+        :item-img="user?.image || null"
+      >
+        <template #actions v-if="user.id !== current_user.id">
+          <base-button
+            class="outline outline-green"
+            @click="create_chat(user.id)"
+          >
+            Ping
+          </base-button>
+          <base-button
+            class="outline outline-green"
+            @click="create_chat(user.id)"
+          >
+            Create chat
+          </base-button>
+        </template>
       </base-list-item>
     </div>
     <div class="controls">
-      <base-button class="full full-blue" @click="sock">get all Chat</base-button>
+      <base-button class="full full-blue" @click="sock"
+        >get all Chat</base-button
+      >
       <base-button class="full full-green" @click="chat">chat</base-button>
     </div>
-
   </div>
 </template>
 
@@ -25,11 +37,8 @@ import useUsers from '@/composables/usersComposables/index'
 import { current_user } from '@/composables/CurrentUserComposable/index'
 import chat from '../../api/chat'
 import users from '../../api/user'
-// const { socket, socketEmit } = useSocket()
-// import useSocket from '@/composables/socketComposables/index'
-
+import { socketEmit, socketSub } from '../../composables/socketComposables'
 const { users: test } = useUsers()
-// console.log(socket)
 const sock = () => {
   users.getAllUserChats({})
   // socketEmit('testus')
@@ -39,9 +48,9 @@ const create_chat = async (personId) => {
 }
 </script>
 <style lang="scss">
-  .main-body {
-    height: 95vh;
-  }
+.main-body {
+  height: 95vh;
+}
 /*.users-list {*/
 /*  display: flex;*/
 /*  flex-wrap: wrap;*/
