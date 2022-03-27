@@ -45,6 +45,7 @@ a {
 }
 .full {
   color: white;
+  margin: 0 1rem;
   &-white {
     background: white;
     color: black;

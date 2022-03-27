@@ -109,12 +109,31 @@ label {
 .underline {
   background: inherit;
   border: none;
-  border-bottom: 1px solid #eee;
+  border-bottom: 2px solid $gray;
+
+  &:active {
+    outline: none;
+    border: none !important;
+    border-bottom: 2px solid $gray;
+  }
+
+  &:focus {
+    border: none !important;
+    outline: none;
+    border-bottom: 2px solid $gray;
+  }
 }
 .full {
   border-style: solid;
   border-width: 2px;
   border-color: $gray;
+  padding: 1rem 1rem;
+  &-blue {
+    border-color: $blue;
+  }
+  &:focus {
+    outline: none;
+  }
 }
 .input-wrapper label {
   margin-right: 10px;

@@ -14,7 +14,7 @@
     </div>
     <form class="message-form d-flex" @submit.prevent="sendMessage">
       <InputField
-        extend-class="full col-9"
+        extend-class="full full-blue"
         @keydown="socketStartType"
         @keyup="socketStopType"
         v-model="text"
@@ -142,7 +142,7 @@ const socketStartType = _.debounce(() => {
 }
 .message-form {
   width: 43%;
-  position: fixed;
+  position: relative;
   margin-top: 1rem;
 }
 .nomessage {
