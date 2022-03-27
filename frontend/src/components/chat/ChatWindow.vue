@@ -2,17 +2,21 @@
   <div class="">
     <div class="wrapper chat">
       <div class="col-4 chat-menu">
-        <ul>
+        <ul class="chat-list">
           <li v-for="chat in chats" :key="chat.id" class="chat-link">
-            <template v-for="user in chat.users">
+            <div class="chatter"  v-for="user in chat.users">
               <router-link
-                v-if="current_user.id !== user.id"
-                :key="user.id"
-                :to="{ name: 'current_chat', params: { id: chat.id } }"
+                      :key="user.id"
+                      :to="{ name: 'current_chat', params: { id: chat.id } }"
               >
-                {{ user.username }}
-              </router-link></template
-            >
+              <base-list-item v-if="current_user.id !== user.id">
+                <template #text>
+                    <p>{{ user.username }}</p>
+                </template>
+              </base-list-item>
+              </router-link>
+            </div>
+
           </li>
         </ul>
       </div>
@@ -74,6 +78,9 @@ const { chats } = userChats()
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
+  }
+  &-list {
+    width: 90%;
   }
   &-messages {
     height: 50vh;

@@ -6,7 +6,10 @@
                 <img v-else src="../../../public/img/male-profile.jpg" alt="">
             </div>
 
-            <p>{{itemText}}</p></div>
+            <slot name="text">
+                <p>{{itemText}}</p>
+            </slot>
+            </div>
         <div class="controls">
             <slot name="actions"></slot>
         </div>
@@ -30,7 +33,7 @@
         align-items: center;
         background-color: white;
         padding: 1rem;
-        margin: 1rem 0;
+        margin: 0 0 1rem 0;
         height: 9rem;
     }
     .item-info {

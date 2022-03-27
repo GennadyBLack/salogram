@@ -120,13 +120,19 @@ img {
   font-size: 10px;
   font-weight: bold;
 }
-.main-menu {
-  height: 40px;
-  background-color: rgb(223, 226, 216);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.main {
+  &-content {
+    height: 95.5vh;
+  }
+  &-menu {
+    height: 40px;
+    background-color: rgb(223, 226, 216);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
+
 .router-list {
   display: flex;
   justify-content: space-between;

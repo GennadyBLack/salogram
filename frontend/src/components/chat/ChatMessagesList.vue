@@ -7,19 +7,19 @@
       <MessageItem
         ref="scrollComponent"
         v-for="message in messages"
-        :key="message.id"
+        :key="message?.id"
         :message="message"
-        :side="`${message.user.id == current_user.id ? 'right' : 'left'}`"
+        :side="`${message?.user?.id == current_user.id ? 'right' : 'left'}`"
       />
     </div>
     <form class="message-form d-flex" @submit.prevent="sendMessage">
-      <input
-        class="col-9 text-field"
+      <InputField
+        extend-class="full col-9"
         @keydown="socketStartType"
         @keyup="socketStopType"
         v-model="text"
       />
-      <button class="col-2" type="submit">Отправить</button>
+      <base-button class="full full-blue" type="submit">Отправить</base-button>
     </form>
   </div>
   <div v-else class="nomessage">Выберите чат позязя</div>
@@ -36,7 +36,7 @@ import { current_user } from '../../composables/CurrentUserComposable/index'
 import { ref, onMounted, onUnmounted, defineExpose } from 'vue'
 import { useRoute } from 'vue-router'
 import userChats from '../../composables/chatComposable'
-
+import InputField from "../fields/InputField";
 const { messages, fetchMessages } = useMeassages()
 const { getChat, fetchChatById } = userChats()
 const route = useRoute()
@@ -156,15 +156,15 @@ const socketStartType = _.debounce(() => {
 .types {
   color: black;
 }
-.text-field {
-  padding: 0.5rem 0.5rem;
-  border: 1px solid dodgerblue;
-  background-color: white;
-  &:focus {
-    outline: 1px solid dodgerblue;
-    border: 1px solid dodgerblue;
-  }
-}
+/*.text-field {*/
+/*  padding: 0.5rem 0.5rem;*/
+/*  border: 1px solid dodgerblue;*/
+/*  background-color: white;*/
+/*  &:focus {*/
+/*    outline: 1px solid dodgerblue;*/
+/*    border: 1px solid dodgerblue;*/
+/*  }*/
+/*}*/
 .pencil {
   position: relative;
   width: 0.35em;

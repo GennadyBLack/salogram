@@ -23,7 +23,7 @@
       :placeholder="placeholder"
       :type="type"
       :disabled="disabled"
-      :class="[mode,extendClass]"
+      :class="extendClass"
 
     />
   </div>
@@ -95,7 +95,7 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="scss" scoped>
 textarea {
   padding-top: 10px !important;
 }
@@ -104,11 +104,17 @@ label {
 }
 .input {
   border-radius: 0.4rem;
+  width: 100%;
 }
 .underline {
   background: inherit;
   border: none;
   border-bottom: 1px solid #eee;
+}
+.full {
+  border-style: solid;
+  border-width: 2px;
+  border-color: $gray;
 }
 .input-wrapper label {
   margin-right: 10px;
