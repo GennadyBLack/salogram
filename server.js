@@ -81,6 +81,22 @@ try {
       next(new Error("Authentication error"));
     }
   }).on("connection", function (socket) {
+    //
+    //
+    //
+    //ping start
+    socket.join(`ping:${socket.userID}`);
+    console.log(`ping:${socket.userID}`);
+
+    socket.on("ping", (data) => {
+      io.to(`ping:${data.userID}`).emit("pong", {
+        pong: "this is ping pong baby",
+      });
+    });
+    //pong end
+    //
+    //
+    //
     console.log(`User ID:${socket.userID} connected`);
     socket.join(`notify:${socket.userID}`); // подключаем пользователя к своей комнате.
     socket.emit(`connected`, { id: socket.userID });
