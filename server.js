@@ -112,6 +112,9 @@ try {
     socket.on("stopTyping", (data) => {
       socket.broadcast.emit("stopTyping", data);
     });
+    socket.on("ping", (data) => {
+      socket.broadcast.emit("stopTyping", data);
+    });
     socket.on("joined", async (id) => {
       socket.broadcast.emit("joined", id);
     });

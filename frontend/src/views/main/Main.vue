@@ -8,10 +8,7 @@
         :item-img="user?.image || null"
       >
         <template #actions v-if="user.id !== current_user.id">
-          <base-button
-            class="outline outline-green"
-            @click="create_chat(user.id)"
-          >
+          <base-button class="outline outline-green" @click="pingPong(user.id)">
             Ping
           </base-button>
           <base-button
@@ -46,6 +43,13 @@ const sock = () => {
 const create_chat = async (personId) => {
   await chat.createChat({ current: current_user.value.id, person: personId })
 }
+function pingPong(id) {
+  socketEmit('ping', { userID: id })
+}
+
+socketSub('pong', (pong) => {
+  console.log(pong)
+})
 </script>
 <style lang="scss">
 .main-body {
