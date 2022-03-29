@@ -1,11 +1,12 @@
 // @ts-ignore
 import api from './index'
+import { loginData } from '@/models/interface'
 
-export const login = (data:any) => {
+export const login = (data: loginData) => {
   return api.post('/auth/login', data, data)
 }
 
-export const register = (data:any) => {
+export const register = (data: loginData) => {
   return api.post('/auth/register', data, data)
 }
 
