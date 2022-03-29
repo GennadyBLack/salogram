@@ -29,25 +29,28 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+// @ts-ignore
 import useUsers from '@/composables/usersComposables/index'
+// @ts-ignore
 import { current_user } from '@/composables/CurrentUserComposable/index'
 import chat from '../../api/chat'
 import users from '../../api/user'
+// @ts-ignore
 import { socketEmit, socketSub } from '../../composables/socketComposables'
 const { users: test } = useUsers()
 const sock = () => {
   users.getAllUserChats({})
   // socketEmit('testus')
 }
-const create_chat = async (personId) => {
+const create_chat = async (personId: string | number) => {
   await chat.createChat({ current: current_user.value.id, person: personId })
 }
-function pingPong(id) {
+function pingPong(id: string | number) {
   socketEmit('ping', { userID: id })
 }
 
-socketSub('pong', (pong) => {
+socketSub('pong', (pong: string | number) => {
   console.log(pong)
 })
 </script>
