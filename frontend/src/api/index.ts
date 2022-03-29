@@ -1,5 +1,7 @@
 import axios from 'axios'
+// @ts-ignore
 import { getToken } from '../helpers/Utils/localStorageHelper'
+// @ts-ignore
 import { setNotice } from '../composables/ErrorsComposable/index'
 // Default config for the axios instance
 const axiosParams = {
@@ -49,13 +51,13 @@ axiosInstance.interceptors.request.use(
     console.log(error.response.status, '-ERROR BAABY')
   }
 )
-const api = (axios) => {
+const api = (axios:any) => {
   // Wrapper functions around axios
   return {
-    get: (url, config) => axios.get(url, config),
-    post: (url, body, config) => axios.post(url, body, config),
-    patch: (url, body, config) => axios.patch(url, body, config),
-    delete: (url, config) => axios.delete(url, config),
+    get: (url:string, config?:any) => axios.get(url, config),
+    post: (url:string, body:any, config?:any) => axios.post(url, body, config),
+    patch: (url:string, body:any, config?:any) => axios.patch(url, body, config),
+    delete: (url:string, config?:any) => axios.delete(url, config),
   }
 }
 // Initialise the api function and pass axiosInstance to it

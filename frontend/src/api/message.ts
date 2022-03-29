@@ -1,19 +1,19 @@
 import api from './index'
 
 const messagesApi = {
-  deleteMessageById: (id) => {
+  deleteMessageById: (id:string|number) => {
     return api.delete('/message', { id })
   },
-  createMessage: async (chatId, data) => {
+  createMessage: async (chatId:string|number, data:any) => {
     return await api.post(`/chats/${chatId}/message`, data)
   },
-  updateMessage: (id, data) => {
+  updateMessage: (id:string|number, data:any) => {
     return api.patch(`/messages/${id}`, data)
   },
-  getMessageById: (id, config) => {
+  getMessageById: (id:string|number, config:any) => {
     return api.get(`/messages/${id}`, config)
   },
-  getMessagesList: (id, config) => {
+  getMessagesList: (id:string|number, config:any) => {
     return api.get(`/messages/${id}`, config)
   },
 }
