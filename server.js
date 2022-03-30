@@ -101,16 +101,16 @@ try {
     socket.join(`notify:${socket.userID}`); // подключаем пользователя к своей комнате.
     socket.emit(`connected`, { id: socket.userID });
     socket.on("openChat", (data) => {
-      socket.join(`personal:${data.chatId}`); // подключаем пользователя к своей комнате.
+      socket.join(`personal:${data.chatId}`); // подключаем пользователя к комнате чата.
       console.log(`Connected to personal chat ${data.chatId}`);
     });
     socket.on("typing", (data) => {
       console.log(data, "socket Data");
-      io.to(`personal:${data.currentId}`).emit("typing", data);
+      io.to(`personal:${data.chatId}`).emit("typing", data);
       // socket.broadcast.emit("typing", data);
     });
     socket.on("stopTyping", (data) => {
-      socket.broadcast.emit("stopTyping", data);
+      io.to(`personal:${data.chatId}`).emit("stopTyping", data);
     });
     socket.on("ping", (data) => {
       socket.broadcast.emit("stopTyping", data);
@@ -122,7 +122,7 @@ try {
       socket.broadcast.emit("leave", id);
     });
     socket.on("sendMessage", (data) => {
-      socket.broadcast.emit("sendMessage", data);
+      io.to(`personal:${data.chatId}`).emit("sendMessage", data);
     });
     socket.on("disconnect", function () {
       console.log("A user disconnected");

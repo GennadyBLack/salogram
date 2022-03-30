@@ -33,7 +33,7 @@ import MessageItem from './MessageItem.vue'
 import useMeassages from '../../composables/chatComposable/useMesasges'
 import { socketEmit, socketSub } from '../../composables/socketComposables'
 import { current_user } from '../../composables/CurrentUserComposable/index'
-import { ref, onMounted, onUnmounted, defineExpose } from 'vue'
+import { ref, onMounted, onUnmounted, defineExpose, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import userChats from '../../composables/chatComposable'
 
@@ -44,6 +44,10 @@ const text = ref(null)
 const isTyping = ref(false)
 const scrollComponent = ref([])
 const windowComponent = ref(null)
+const chatter = computed(() =>
+  getChat.value.users.find((user) => user.id !== current_user.value.id)
+)
+
 fetchChatById(route.params.id)
 defineExpose({ scrollComponent })
 
@@ -69,15 +73,15 @@ defineExpose({ scrollComponent })
 //   }
 // }
 
-socketSub('typing', (arg) => {
+socketSub('typing', (data) => {
   // isTyping.value = true
-  // if (arg.chatId === route.params.id) {
-  //   isTyping.value = true
-  // }
+  if (data.currentId !== current_user.value.id) {
+    isTyping.value = true
+  }
 })
 
 socketSub('stopTyping', (arg) => {
-  if (arg.chatId === route.params.id) {
+  if (data.currentId !== current_user.value.id) {
     isTyping.value = false
   }
 })
@@ -98,19 +102,20 @@ async function sendMessage() {
   socketEmit('sendMessage', {
     chatId: route.params.id,
   })
-
   fetchMessages()
 }
-function socketType() {
-  socketEmit('typing', {
-    currentId: current_user.value.id,
-    chatId: route.params.id,
-  })
-}
+// function socketType() {
+//   socketEmit('typing', {
+//     currentId: current_user.value.id,
+//     chatterId: chatter.value.id,
+//     chatId: route.params.id,
+//   })
+// }
 const socketStopType = _.debounce(() => {
   console.log('stopping')
   socketEmit('stopTyping', {
     currentId: current_user.value.id,
+    chatterId: chatter.value.id,
     chatId: route.params.id,
   })
 }, 2000)
@@ -119,9 +124,10 @@ const socketStartType = _.debounce(() => {
   console.log('starttyping')
   socketEmit('typing', {
     currentId: current_user.value.id,
+    chatterId: chatter.value.id,
     chatId: route.params.id,
   })
-}, 600)
+}, 200)
 </script>
 <style lang="scss">
 .messages-wrapper {
