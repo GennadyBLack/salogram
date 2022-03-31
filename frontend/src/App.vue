@@ -5,9 +5,12 @@
   </div>
 </template>
 <script>
-import { fetchCurrentUser } from './composables/CurrentUserComposable/index'
+import {
+  fetchCurrentUser,
+  current_user,
+} from './composables/CurrentUserComposable/index'
 import Errors from './components/transitions/Errors'
-import { initSocket, socket } from './composables/socketComposables'
+import { initSocket, socket, socketSub } from './composables/socketComposables'
 import DefaultLayout from './layouts/DefaultLayout.vue'
 import AuthLayout from './layouts/AuthLayout.vue'
 export default {
@@ -24,9 +27,13 @@ export default {
   },
 
   async mounted() {
-    initSocket()
-    console.log(socket, 'SUCKIT')
     await fetchCurrentUser()
+    //подключаем пользователя к сокету как тольько пройдет аутентификацию
+    initSocket()
+    //подписываемся на уведомления о новых сообщениях
+    socketSub(`notify:${current_user.value.id}`, (data = {}) => {
+      console.log('new message for your', data)
+    })
   },
 }
 </script>

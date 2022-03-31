@@ -1,9 +1,7 @@
 <template>
   <div class="messages-wrapper" v-if="route.params.id">
     <div class="messages" ref="windowComponent">
-      <div v-if="isTyping" class="types">
-        <pencil />
-      </div>
+      <pencil v-if="isTyping" class="types" />
       <MessageItem
         ref="scrollComponent"
         v-for="message in messages"
@@ -24,7 +22,6 @@
   </div>
   <div v-else class="nomessage">Выберите чат позязя</div>
 </template>
-
 <script setup>
 import _ from 'lodash'
 import chat from '../../api/chat'
@@ -43,7 +40,7 @@ const route = useRoute()
 const text = ref(null)
 const isTyping = ref(false)
 const scrollComponent = ref([])
-const windowComponent = ref(null)
+
 const chatter = computed(() =>
   getChat.value.users.find((user) => user.id !== current_user.value.id)
 )
@@ -51,6 +48,7 @@ const chatter = computed(() =>
 fetchChatById(route.params.id)
 defineExpose({ scrollComponent })
 
+// const windowComponent = ref(null)
 // onMounted(() => {
 //   console.log(windowComponent.value, 'windowComponent')
 //   console.log(scrollComponent.value, 'scrollComponent')
@@ -74,34 +72,29 @@ defineExpose({ scrollComponent })
 // }
 
 socketSub('typing', (data) => {
-  // isTyping.value = true
   if (data.currentId !== current_user.value.id) {
     isTyping.value = true
   }
 })
 
-socketSub('stopTyping', (arg) => {
-  if (data.currentId !== current_user.value.id) {
+socketSub('stopTyping', (data) => {
+  if (data?.currentId !== current_user.value.id) {
     isTyping.value = false
   }
 })
 socketSub('sendMessage', (arg) => {
-  if (arg.chatId === route.params.id) {
+  if (arg?.chatId === route.params.id) {
     fetchMessages()
   }
 })
 async function sendMessage() {
   await chat.createMessage(route.params.id, { text: text.value })
   text.value = ''
+  await socketEmit('sendMessage', {
+    chatId: route.params.id,
+    userId: chatter.value.id,
+  })
 
-  socketEmit('stopTyping', {
-    currentId: current_user.value.id,
-    secondId: chat.users[1].id,
-    chatId: route.params.id,
-  })
-  socketEmit('sendMessage', {
-    chatId: route.params.id,
-  })
   fetchMessages()
 }
 // function socketType() {
@@ -112,7 +105,6 @@ async function sendMessage() {
 //   })
 // }
 const socketStopType = _.debounce(() => {
-  console.log('stopping')
   socketEmit('stopTyping', {
     currentId: current_user.value.id,
     chatterId: chatter.value.id,
@@ -121,7 +113,6 @@ const socketStopType = _.debounce(() => {
 }, 2000)
 
 const socketStartType = _.debounce(() => {
-  console.log('starttyping')
   socketEmit('typing', {
     currentId: current_user.value.id,
     chatterId: chatter.value.id,
