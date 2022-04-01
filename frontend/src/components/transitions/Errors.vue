@@ -18,6 +18,7 @@
         >
           {{ notice.notice_message }}
         </router-link>
+        <p>{{ notice.meta.text }}</p>
       </div>
 
       <div v-else :class="notice.type" :key="notice.notice_message">

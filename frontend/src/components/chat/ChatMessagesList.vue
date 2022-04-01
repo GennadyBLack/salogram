@@ -30,7 +30,14 @@ import MessageItem from './MessageItem.vue'
 import useMeassages from '../../composables/chatComposable/useMesasges'
 import { socketEmit, socketSub } from '../../composables/socketComposables'
 import { current_user } from '../../composables/CurrentUserComposable/index'
-import { ref, onMounted, onUnmounted, defineExpose, computed } from 'vue'
+import {
+  ref,
+  onUpdated,
+  onMounted,
+  onUnmounted,
+  defineExpose,
+  computed,
+} from 'vue'
 import { useRoute } from 'vue-router'
 import userChats from '../../composables/chatComposable'
 
@@ -91,13 +98,14 @@ socketSub('sendMessage', (arg) => {
 })
 async function sendMessage() {
   await chat.createMessage(route.params.id, { text: text.value })
-  text.value = ''
+
   await socketEmit('sendMessage', {
     chatId: route.params.id,
     userId: chatter.value.id,
     chatterName: chatter.value.username,
+    text: text.value,
   })
-
+  text.value = ''
   fetchMessages()
 }
 // function socketType() {

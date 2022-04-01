@@ -32,7 +32,11 @@ export default {
       return this.$route.meta.layout
     },
   },
-
+  watch: {
+    chat_path: (next, old) => {
+      console.log(next, 'next')
+    },
+  },
   async mounted() {
     await fetchCurrentUser()
     //подключаем пользователя к сокету как тольько пройдет аутентификацию
@@ -40,10 +44,9 @@ export default {
     //подписываемся на уведомления о новых сообщениях
     socketSub(`notify:${current_user.value.id}`, (data = {}) => {
       //если мы сейчас не находимся в чате из которого пришло сообщение - вывести уведомление
-
       if (!this.chat_path && this.chat_id !== data?.chatId) {
         setNotice(
-          `New message from chat ${data?.chatterName}`,
+          `New message from ${data?.chatterName}`,
           'message-notify',
           data
         )
