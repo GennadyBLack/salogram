@@ -1,6 +1,5 @@
 <template>
   <div class="app_container">
-    {{ chat_path }}/{{ chat_id }}
     <component :is="layout" />
     <Errors />
   </div>
@@ -41,8 +40,13 @@ export default {
     //подписываемся на уведомления о новых сообщениях
     socketSub(`notify:${current_user.value.id}`, (data = {}) => {
       //если мы сейчас не находимся в чате из которого пришло сообщение - вывести уведомление
-      if (this.chat_path && this.chat_id !== data?.chatId) {
-        setNotice(`New message from chat ${data?.chatId}`)
+
+      if (!this.chat_path && this.chat_id !== data?.chatId) {
+        setNotice(
+          `New message from chat ${data?.chatterName}`,
+          'message-notify',
+          data
+        )
       }
     })
   },

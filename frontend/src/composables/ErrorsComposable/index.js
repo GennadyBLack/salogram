@@ -2,12 +2,13 @@ import { ref } from 'vue'
 
 export const notices = ref([])
 
-export const setNotice = (massage, type = 'error-message') => {
+export const setNotice = (massage, type = 'error-message', meta) => {
   notices.value.push({
     notice_message: massage,
     type,
+    meta,
   })
-  setTimeout(deleteAllNotice, 5000)
+  // setTimeout(deleteAllNotice, 5000)
 }
 
 export const deleteNotice = (ind) => {

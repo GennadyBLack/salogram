@@ -41,9 +41,11 @@ const text = ref(null)
 const isTyping = ref(false)
 const scrollComponent = ref([])
 
-const chatter = computed(() =>
-  getChat.value.users.find((user) => user.id !== current_user.value.id)
-)
+const chatter = computed(() => {
+  let u = getChat.value.users.find((user) => user.id !== current_user.value.id)
+  console.log(u, '------chatter')
+  return u
+})
 
 fetchChatById(route.params.id)
 defineExpose({ scrollComponent })
@@ -93,6 +95,7 @@ async function sendMessage() {
   await socketEmit('sendMessage', {
     chatId: route.params.id,
     userId: chatter.value.id,
+    chatterName: chatter.value.username,
   })
 
   fetchMessages()
