@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="router-list__right">
-          Hi: {{ current_user?.username }}
+          Hi: {{ current_user?.username }}/{{ current_user?.id }}
           <button
             v-if="current_user?.id ? current_user?.id : null"
             @click="logout"

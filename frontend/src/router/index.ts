@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import {
   current_user,
-  fetchCurrentUser,
-} from '../composables/CurrentUserComposable/index'
-import Login from '../views/auth/LoginForm'
-import Register from '../views/auth/RegisterForm'
-import Main from '../views/main/Main'
-import Direct from '../views/direct/Direct'
+  fetchCurrentUser,// @ts-ignore
+} from '@/composables/CurrentUserComposable/index'
+import Login from '../views/auth/LoginForm.vue'
+import Register from '../views/auth/RegisterForm.vue'
+import Main from '../views/main/Main.vue'
+import Direct from '../views/direct/Direct.vue'
 
 const routes = [
   {
@@ -48,7 +49,7 @@ const routes = [
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',
-    component: () => import('../components/transitions/404'),
+    component: () => import('../components/transitions/404.vue'),
     meta: { layout: 'DefaultLayout' },
   },
 ]

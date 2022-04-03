@@ -47,7 +47,7 @@
     </v-form>
   </div>
 </template>
-<script setup>
+<script lang="ts" setup>
 import useLogin from '../../composables/authComposables/login'
 
 const { login, login_form, editField } = useLogin()

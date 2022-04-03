@@ -81,21 +81,22 @@ try {
       next(new Error("Authentication error"));
     }
   }).on("connection", function (socket) {
-    console.log(`User ID:${socket.userID} connected`);
     socket.join(`notify:${socket.userID}`); // подключаем пользователя к своей комнате.
+    console.log(`join notify ${socket.userID}`);
+
     socket.emit(`connected`, { id: socket.userID });
     socket.on("openChat", (data) => {
-      socket.join(`personal:${data.chatId}`); // подключаем пользователя к своей комнате.
-      console.log(`Connected to personal chat ${data.chatId}`);
+      socket.join(`personal:${data.chatId}`); // подключаем пользователя к комнате чата.
     });
     socket.on("typing", (data) => {
       console.log(data, "socket Data");
-      io.to(`personal:${data.currentId}`).emit("typing", data);
+      io.to(`personal:${data.chatId}`).emit("typing", data);
       // socket.broadcast.emit("typing", data);
     });
     socket.on("stopTyping", (data) => {
-      socket.broadcast.emit("stopTyping", data);
+      io.to(`personal:${data.chatId}`).emit("stopTyping", data);
     });
+
     socket.on("joined", async (id) => {
       socket.broadcast.emit("joined", id);
     });
@@ -103,7 +104,9 @@ try {
       socket.broadcast.emit("leave", id);
     });
     socket.on("sendMessage", (data) => {
-      socket.broadcast.emit("sendMessage", data);
+      console.log("hereeeeeeeeeeeeeeeeeeee", data);
+      io.to(`notify:${data.userId}`).emit(`notify:${data.userId}`, data);
+      io.to(`personal:${data.chatId}`).emit("sendMessage", data);
     });
     socket.on("disconnect", function () {
       console.log("A user disconnected");
