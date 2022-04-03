@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import {
   current_user,
-  fetchCurrentUser,// @ts-ignore
+  fetchCurrentUser, // @ts-ignore
 } from '@/composables/CurrentUserComposable/index'
 import Login from '../views/auth/LoginForm.vue'
 import Register from '../views/auth/RegisterForm.vue'

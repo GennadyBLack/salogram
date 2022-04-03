@@ -11,6 +11,5 @@ export const register = (data: loginData) => {
 }
 
 export const me = async (config = {}) => {
-  console.log(config, 'config')
   return await api.post('/auth/me', {}, config)
 }

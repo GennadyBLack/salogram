@@ -1,18 +1,17 @@
 <template>
   <div class="">
     <div class="wrapper chat">
-      <div class="col-4 chat-menu">
+      <div class="col-3 chat-menu">
         <ul>
           <li v-for="chat in chats" :key="chat.id" class="chat-link">
             <template v-for="user in chat.users">
-              <router-link
+              <chat-menu-link
+                :chatId="chat.id"
+                :user="user"
                 v-if="current_user.id !== user.id"
                 :key="user.id"
-                :to="{ name: 'current_chat', params: { id: chat.id } }"
-              >
-                {{ user.username }}
-              </router-link></template
-            >
+              />
+            </template>
           </li>
         </ul>
       </div>
@@ -24,6 +23,7 @@
 </template>
 
 <script setup>
+import ChatMenuLink from './ChatMenuLink.vue'
 import ChatMessagesList from './ChatMessagesList.vue'
 import userChats from '../../composables/chatComposable'
 import { current_user } from '@/composables/CurrentUserComposable'
@@ -53,10 +53,20 @@ const { chats } = userChats()
   padding: 1rem;
 }
 .chat-link {
+  align-items: center;
+  display: flex;
+  align-content: space-between;
+  justify-content: flex-start;
   text-decoration: none;
   color: black;
-  height: 2rem;
-  display: block;
+  height: 4rem;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  a {
+    display: flex;
+    flex-direction: row;
+    color: black;
+  }
 }
 .wrapper {
   box-sizing: border-box;
@@ -67,13 +77,19 @@ const { chats } = userChats()
   min-height: 35rem;
   padding: 2rem;
   &-menu {
+    border-radius: 3px;
+    background: white;
     border-right: 1px solid white;
     height: 50vh;
-    overflow-x: auto;
+    overflow-y: auto;
     display: flex;
+    border-right: 3px solid #eee;
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
+    ul {
+      width: 100%;
+    }
   }
   &-messages {
     height: 50vh;

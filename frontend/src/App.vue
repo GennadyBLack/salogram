@@ -32,11 +32,7 @@ export default {
       return this.$route.meta.layout
     },
   },
-  watch: {
-    chat_path: (next, old) => {
-      console.log(next, 'next')
-    },
-  },
+
   async mounted() {
     await fetchCurrentUser()
     //подключаем пользователя к сокету как тольько пройдет аутентификацию

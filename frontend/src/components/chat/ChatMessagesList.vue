@@ -1,6 +1,7 @@
 <template>
   <div class="messages-wrapper" v-if="route.params.id">
     <div class="messages" ref="windowComponent">
+      {{ chatter?.id }}-id
       <pencil v-if="isTyping" class="types" />
       <MessageItem
         ref="scrollComponent"
@@ -17,7 +18,9 @@
         @keyup="socketStopType"
         v-model="text"
       />
-      <button class="col-2" type="submit">Отправить</button>
+      <button class="col-2 outline outline-green" type="submit">
+        Отправить
+      </button>
     </form>
   </div>
   <div v-else class="nomessage">Выберите чат позязя</div>
@@ -42,19 +45,19 @@ import { useRoute } from 'vue-router'
 import userChats from '../../composables/chatComposable'
 
 const { messages, fetchMessages } = useMeassages()
-const { getChat, fetchChatById } = userChats()
+const { getChat } = userChats()
 const route = useRoute()
 const text = ref(null)
 const isTyping = ref(false)
 const scrollComponent = ref([])
 
 const chatter = computed(() => {
-  let u = getChat.value.users.find((user) => user.id !== current_user.value.id)
-  console.log(u, '------chatter')
-  return u
+  console.log(getChat, 'hetchat')
+  return getChat?.value?.users?.find(
+    (user) => user?.id !== current_user?.value?.id
+  )
 })
 
-fetchChatById(route.params.id)
 defineExpose({ scrollComponent })
 
 // const windowComponent = ref(null)
@@ -149,8 +152,7 @@ const socketStartType = _.debounce(() => {
   flex-direction: column-reverse;
 }
 .message-form {
-  width: 43%;
-  position: fixed;
+  width: 100%;
   margin-top: 1rem;
 }
 .nomessage {

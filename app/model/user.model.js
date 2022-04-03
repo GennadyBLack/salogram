@@ -21,6 +21,9 @@ module.exports = (sequelize, Sequelize) => {
     description: {
       type: Sequelize.STRING,
     },
+    status: {
+      type: Sequelize.BOOLEAN,
+    },
   });
 
   return User;

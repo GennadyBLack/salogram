@@ -4,6 +4,7 @@
       <base-list-item
         v-for="user in test?.data"
         :key="user.id"
+        :status="user.status"
         :item-text="user.username"
         :item-img="user?.image || null"
       >

@@ -7,7 +7,6 @@
   </div>
 </template>
 <script setup>
-import { current_user } from '@/composables/CurrentUserComposable/index'
 import MainMenu from '../components/transitions/MainMenu.vue'
 </script>
 <style scoped>

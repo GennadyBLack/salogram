@@ -16,7 +16,7 @@ exports.login = async (req, res) => {
           res.status(404).json({ errors: "no user with that email found" });
         else {
           bcrypt.compare(password, user.password, (errors, match) => {
-            if (errors) res.status(500).json(errors);
+            if (errors) res.status(500).json({ error: errors });
             else if (match)
               res.status(200).json({ token: generateToken(user), user: user });
             else res.status(403).json({ error: "passwords do not match" });
@@ -42,19 +42,20 @@ exports.register = async (req, res) => {
           email: email,
           password: hash,
           username: username,
+          status: true,
         });
         newUser
           .save()
           .then((user) => {
             res.status(200).json({ token: generateToken(user), user: user });
           })
-          .catch((errors) => {
+          .catch((error) => {
             res.status(500).json({ error: error });
           });
       }
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: error });
   }
 };
 
@@ -67,8 +68,15 @@ exports.me = async (req, res) => {
     const user = await User.findOne({
       where: { id: req.user.id },
       include: "chats",
-    });
-    res.status(200).json({ user: user });
+    })
+      .then((user) => {
+        if (user) {
+          res.status(200).json({ user: user });
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({ error: error });
+      });
   } catch (error) {
     res.status(500).json({ error: error });
   }

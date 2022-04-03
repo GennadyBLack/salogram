@@ -69,7 +69,6 @@ try {
         tokenSecret,
         function (err, response) {
           if (err) return next(new Error("Invalid JWT-Token"));
-
           socket.userID = response.data.id;
           socket.username = response.data.username;
           socket.decoded = response;
@@ -80,16 +79,23 @@ try {
     } else {
       next(new Error("Authentication error"));
     }
-  }).on("connection", function (socket) {
-    socket.join(`notify:${socket.userID}`); // подключаем пользователя к своей комнате.
-    console.log(`join notify ${socket.userID}`);
+  }).on("connection", async function (socket) {
+    let connectedUser = await User.findByPk(socket.userID);
+    if (connectedUser) {
+      connectedUser.status = true;
+      connectedUser.save();
+    }
 
-    socket.emit(`connected`, { id: socket.userID });
+    socket.join(`notify:${socket.userID}`); // подключаем пользователя к своей комнате.
+    console.error(`USER CONNECTED ${socket.userID}`);
+
+    socket.broadcast.emit(`status:${socket?.userID}`, true); //status connect true
+    socket.emit(`status:${socket.userID}`, true); //status connect true
+
     socket.on("openChat", (data) => {
       socket.join(`personal:${data.chatId}`); // подключаем пользователя к комнате чата.
     });
     socket.on("typing", (data) => {
-      console.log(data, "socket Data");
       io.to(`personal:${data.chatId}`).emit("typing", data);
       // socket.broadcast.emit("typing", data);
     });
@@ -97,21 +103,29 @@ try {
       io.to(`personal:${data.chatId}`).emit("stopTyping", data);
     });
 
-    socket.on("joined", async (id) => {
-      socket.broadcast.emit("joined", id);
-    });
-    socket.on("leave", (id) => {
-      socket.broadcast.emit("leave", id);
-    });
+    // socket.on("joined", async (id) => {
+    //   socket.broadcast.emit("joined", id);
+    // });
+    // socket.on("leave", (id) => {
+    //   socket.broadcast.emit("leave", id);
+    // });
     socket.on("sendMessage", (data) => {
-      console.log("hereeeeeeeeeeeeeeeeeeee", data);
       io.to(`notify:${data.userId}`).emit(`notify:${data.userId}`, data);
       io.to(`personal:${data.chatId}`).emit("sendMessage", data);
     });
-    socket.on("disconnect", function () {
-      console.log("A user disconnected");
-    });
-    socket.on("disconnect", function () {
+
+    socket.on("disconnect", async function () {
+      let connectedUser = await User.findByPk(socket.userID).then(
+        async (user) => {
+          if (user) {
+            user.changed("status", false);
+            console.log(user.status, "status");
+            await user.save();
+          }
+        }
+      );
+
+      socket.emit(`status:${socket.userID}`, false);
       console.log(`User ID:${socket.userID} disconnected`);
     });
   });
@@ -119,27 +133,3 @@ try {
   console.log(e);
 } finally {
 }
-//
-// io.on("connection", function (socket) {
-//   let token = socket.handshake.auth.token;
-//   console.log("Made socket connection");
-//   socket.on("typing", (data) => {
-//     console.log(data, "socket Data");
-//     socket.broadcast.emit("typing", data);
-//   });
-//   socket.on("stopTyping", (data) => {
-//     socket.broadcast.emit("stopTyping", data);
-//   });
-//   socket.on("joined", async (id) => {
-//     socket.broadcast.emit("joined", id);
-//   });
-//   socket.on("leave", (id) => {
-//     socket.broadcast.emit("leave", id);
-//   });
-//   socket.on("sendMessage", (data) => {
-//     socket.broadcast.emit("sendMessage", data);
-//   });
-//   socket.on("disconnect", function () {
-//     console.log("A user disconnected");
-//   });
-// });
