@@ -40,6 +40,7 @@ const routes = [
         path: '/direct/:id',
         name: 'current_chat',
         component: Direct,
+        // meta: { layout: 'DefaultLayout', key: (route: { params:{id:number|string} }) => `CurrentChat-${route.params.id}`, requiresAuth: true },
         meta: { layout: 'DefaultLayout', requiresAuth: true },
         props: true,
       },

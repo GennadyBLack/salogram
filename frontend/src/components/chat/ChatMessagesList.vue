@@ -6,21 +6,19 @@
       <MessageItem
         ref="scrollComponent"
         v-for="message in messages"
-        :key="message.id"
+        :key="message?.id"
         :message="message"
-        :side="`${message.user.id == current_user.id ? 'right' : 'left'}`"
+        :side="`${message?.user?.id == current_user.id ? 'right' : 'left'}`"
       />
     </div>
     <form class="message-form d-flex" @submit.prevent="sendMessage">
-      <input
-        class="col-9 text-field"
+      <InputField
+        extend-class="full full-blue"
         @keydown="socketStartType"
         @keyup="socketStopType"
         v-model="text"
       />
-      <button class="col-2 outline outline-green" type="submit">
-        Отправить
-      </button>
+      <base-button class="full full-blue" type="submit">Отправить</base-button>
     </form>
   </div>
   <div v-else class="nomessage">Выберите чат позязя</div>
@@ -42,7 +40,17 @@ import {
   computed,
 } from 'vue'
 import { useRoute } from 'vue-router'
-import userChats from '../../composables/chatComposable'
+
+//Если вызываем здесь композабл userChats, то видимо из-за нестед роутов он маунтится дважды, и компьютеды срабатывают дважды,
+//поэтому необходимые ф-ии и объекты переданы через пропсы
+
+// import userChats from '../../composables/chatComposable'
+import InputField from '../fields/InputField'
+
+const props = defineProps({
+  getChat: Object,
+  fetchChatById: Function,
+})
 
 const { messages, fetchMessages } = useMeassages()
 const { getChat } = userChats()
@@ -108,7 +116,7 @@ async function sendMessage() {
     chatterName: chatter.value.username,
     text: text.value,
   })
-  text.value = ''
+  // text.value = ''
   fetchMessages()
 }
 // function socketType() {
@@ -127,6 +135,7 @@ const socketStopType = _.debounce(() => {
 }, 2000)
 
 const socketStartType = _.debounce(() => {
+  console.log(text.value)
   socketEmit('typing', {
     currentId: current_user.value.id,
     chatterId: chatter.value.id,
@@ -166,15 +175,15 @@ const socketStartType = _.debounce(() => {
 .types {
   color: black;
 }
-.text-field {
-  padding: 0.5rem 0.5rem;
-  border: 1px solid dodgerblue;
-  background-color: white;
-  &:focus {
-    outline: 1px solid dodgerblue;
-    border: 1px solid dodgerblue;
-  }
-}
+/*.text-field {*/
+/*  padding: 0.5rem 0.5rem;*/
+/*  border: 1px solid dodgerblue;*/
+/*  background-color: white;*/
+/*  &:focus {*/
+/*    outline: 1px solid dodgerblue;*/
+/*    border: 1px solid dodgerblue;*/
+/*  }*/
+/*}*/
 .pencil {
   position: relative;
   width: 0.35em;

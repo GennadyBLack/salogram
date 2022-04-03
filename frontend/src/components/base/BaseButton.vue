@@ -1,8 +1,8 @@
 <template>
-  <button v-if="!link" :class="[mode, extendClass]">
+  <button v-if="!link" :class="extendClass">
     <slot></slot>
   </button>
-  <router-link v-else :to="to" :class="[mode, extendClass]">
+  <router-link v-else :to="to" :class="extendClass">
     <slot></slot>
   </router-link>
 </template>
@@ -10,7 +10,6 @@
 <script setup>
 const props = defineProps({
   link: String,
-  mode: String,
   to: String,
   extendClass: String,
 })
@@ -46,6 +45,7 @@ a {
 }
 .full {
   color: white;
+  margin: 0 1rem;
   &-white {
     background: white;
     color: black;

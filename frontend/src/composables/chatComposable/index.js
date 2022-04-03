@@ -18,6 +18,7 @@ export default () => {
   }
 
   onMounted(async () => {
+    console.log('mounted chatComposable')
     await fetchChat()
   })
   watch(id, (curValue, oldValue) => {

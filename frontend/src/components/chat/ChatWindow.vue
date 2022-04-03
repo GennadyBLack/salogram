@@ -16,7 +16,10 @@
         </ul>
       </div>
       <div class="col-8 chat-messages">
-        <ChatMessagesList />
+        <ChatMessagesList
+          :get-chat="getChat"
+          :fetch-chat-by-id="fetchChatById"
+        />
       </div>
     </div>
   </div>
@@ -27,7 +30,7 @@ import ChatMenuLink from './ChatMenuLink.vue'
 import ChatMessagesList from './ChatMessagesList.vue'
 import userChats from '../../composables/chatComposable'
 import { current_user } from '@/composables/CurrentUserComposable'
-const { chats } = userChats()
+const { chats, getChat, fetchChatById } = userChats()
 </script>
 
 <style scoped lang="scss">
@@ -90,6 +93,9 @@ const { chats } = userChats()
     ul {
       width: 100%;
     }
+  }
+  &-list {
+    width: 90%;
   }
   &-messages {
     height: 50vh;
