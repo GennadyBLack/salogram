@@ -2,7 +2,7 @@
     <div class="item-body">
         <div class="item-info">
             <div class="item-img">
-                <img v-if="imgSrc" :src="imgSrc" alt="">
+                <img v-if="itemImg" :src="itemImg" alt="">
                 <img v-else src="../../../public/img/male-profile.jpg" alt="">
             </div>
 

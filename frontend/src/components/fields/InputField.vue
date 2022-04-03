@@ -31,7 +31,7 @@
 <script>
 import { getCurrentInstance } from 'vue'
 export default {
-  emits: ['input:modelValue'],
+  emits: ['update:modelValue'],
   name: 'InputField',
   data() {
     return {
@@ -49,8 +49,7 @@ export default {
       type: [String],
     },
     name: {
-      type: [String, Number],
-      required: true,
+      type: [String, Number]
     },
     rules: {
       type: [String, Object, Function],
@@ -89,7 +88,7 @@ export default {
         return this.modelValue
       },
       set(newValue) {
-        this.$emit('input:modelValue', newValue)
+        this.$emit('update:modelValue', newValue)
       },
     },
   },

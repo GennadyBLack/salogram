@@ -1,4 +1,4 @@
-import { ref, reactive, computed, onMounted, watch } from 'vue'
+import { ref, reactive, computed, onMounted, watch, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import chat from '../../api/chat'
 
@@ -19,15 +19,22 @@ export default () => {
   }
 
   onMounted(async () => {
+    console.log("mounted chatComposable")
     await fetchChat()
   })
-  // watch(id, (curValue, oldValue) => {
-  //   getChat.value = null
-  //   //   console.log(curValue.params.id, oldValue.params.id)
-  //   // console.log(curValue, oldValue)
-  //   // if (curValue !== oldValue) {
-  //   //   // fetchChatById(curValue)
-  //   // }
-  // })
+
+  watch(id, (curValue, oldValue) => {
+    getChat.value = null
+    if (curValue !== oldValue) {
+      fetchChatById(curValue)
+    }
+  })
+
+  //fetchChat происходит 3 раза при загрузке
+  // watchEffect(() =>
+  //     fetchChatById(
+  //       route.params.id
+  //     )
+  // );
   return { chats, getChat, fetchChat, fetchChatById }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="messages-wrapper" v-if="route.params.id">
+  <div class="messages-wrapper" v-show="route.params.id">
     <div class="messages" ref="windowComponent">
       <pencil v-if="isTyping" class="types" />
       <MessageItem
@@ -20,7 +20,7 @@
       <base-button class="full full-blue" type="submit">Отправить</base-button>
     </form>
   </div>
-  <div v-else class="nomessage">Выберите чат позязя</div>
+  <div v-show="!route.params.id" class="nomessage">Выберите чат позязя</div>
 </template>
 <script setup>
 import _ from 'lodash'
@@ -39,22 +39,32 @@ import {
   computed,
 } from 'vue'
 import { useRoute } from 'vue-router'
-import userChats from '../../composables/chatComposable'
+
+//Если вызываем здесь композабл userChats, то видимо из-за нестед роутов он маунтится дважды, и компьютеды срабатывают дважды,
+//поэтому необходимые ф-ии и объекты переданы через пропсы
+
+// import userChats from '../../composables/chatComposable'
 import InputField from "../fields/InputField";
+
+const props = defineProps({
+  getChat: Object,
+  fetchChatById: Function
+})
+
 const { messages, fetchMessages } = useMeassages()
-const { getChat, fetchChatById } = userChats()
+// const { getChat, fetchChatById } = userChats()
 const route = useRoute()
 const text = ref(null)
 const isTyping = ref(false)
 const scrollComponent = ref([])
 
 const chatter = computed(() => {
-  let u = getChat.value.users.find((user) => user.id !== current_user.value.id)
+  let u = props.getChat.users.find((user) => user.id !== current_user.value.id)
   console.log(u, '------chatter')
   return u
 })
 
-fetchChatById(route.params.id)
+props.fetchChatById(route.params.id)
 defineExpose({ scrollComponent })
 
 // const windowComponent = ref(null)
@@ -105,7 +115,7 @@ async function sendMessage() {
     chatterName: chatter.value.username,
     text: text.value,
   })
-  text.value = ''
+  // text.value = ''
   fetchMessages()
 }
 // function socketType() {
@@ -124,6 +134,7 @@ const socketStopType = _.debounce(() => {
 }, 2000)
 
 const socketStartType = _.debounce(() => {
+  console.log(text.value)
   socketEmit('typing', {
     currentId: current_user.value.id,
     chatterId: chatter.value.id,
