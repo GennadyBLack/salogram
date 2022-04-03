@@ -44,7 +44,7 @@ import { useRoute } from 'vue-router'
 //Если вызываем здесь композабл userChats, то видимо из-за нестед роутов он маунтится дважды, и компьютеды срабатывают дважды,
 //поэтому необходимые ф-ии и объекты переданы через пропсы
 
-// import userChats from '../../composables/chatComposable'
+import userChats from '../../composables/chatComposable'
 import InputField from '../fields/InputField'
 
 const props = defineProps({
