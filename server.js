@@ -80,10 +80,17 @@ try {
       next(new Error("Authentication error"));
     }
   }).on("connection", async function (socket) {
-    let connectedUser = await User.findByPk(socket.userID);
-    if (connectedUser) {
-      connectedUser.status = true;
-      connectedUser.save();
+    try {
+      await User.update(
+        { status: true },
+        {
+          where: {
+            id: socket.userID,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
     }
 
     socket.join(`notify:${socket.userID}`); // подключаем пользователя к своей комнате.
@@ -115,18 +122,20 @@ try {
     });
 
     socket.on("disconnect", async function () {
-      let connectedUser = await User.findByPk(socket.userID).then(
-        async (user) => {
-          if (user) {
-            user.changed("status", false);
-            console.log(user.status, "status");
-            await user.save();
+      try {
+        await User.update(
+          { status: false },
+          {
+            where: {
+              id: socket.userID,
+            },
           }
-        }
-      );
-
-      socket.emit(`status:${socket.userID}`, false);
-      console.log(`User ID:${socket.userID} disconnected`);
+        );
+        socket.emit(`status:${socket.userID}`, false);
+        console.log(`User ID:${socket.userID} disconnected`);
+      } catch (error) {
+        console.log(error);
+      }
     });
   });
 } catch (e) {

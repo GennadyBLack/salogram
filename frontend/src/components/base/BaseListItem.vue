@@ -7,7 +7,7 @@
       </div>
 
       <p>{{ itemText }}</p>
-      {{ status }}
+      <span :class="{ online: status }"></span>
     </div>
     <div class="controls">
       <slot name="actions"></slot>
@@ -53,5 +53,12 @@ img {
 .controls {
   justify-content: flex-end;
   width: 48%;
+}
+.online {
+  height: 1rem;
+  width: 1rem;
+  background: green;
+  border-radius: 3rem;
+  display: block;
 }
 </style>

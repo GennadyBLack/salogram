@@ -1,7 +1,7 @@
 <template>
   <router-link :to="{ name: 'current_chat', params: { id: chatId } }">
     {{ user.username }}
-    <span :class="{ online: status }"></span>
+    <span :class="{ online: status || user.status }"></span>
   </router-link>
 </template>
 <script lang="ts" setup>
