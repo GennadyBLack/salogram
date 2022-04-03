@@ -97,7 +97,6 @@ exports.createChat = (req, res) => {
 // Find a Task by Id
 exports.findUserChats = async (req, res) => {
   try {
-    // const user = await User.findOne({ where: { id: req.params.userId } });
     const user = await User.findByPk(req.user.id);
     const chats = await user.getChats({ include: ["users"] });
 

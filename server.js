@@ -117,6 +117,7 @@ try {
     //   socket.broadcast.emit("leave", id);
     // });
     socket.on("sendMessage", (data) => {
+      // направляем оповещение с сообщением в канал notify
       io.to(`notify:${data.userId}`).emit(`notify:${data.userId}`, data);
       io.to(`personal:${data.chatId}`).emit("sendMessage", data);
     });

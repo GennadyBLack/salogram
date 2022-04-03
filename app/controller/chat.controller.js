@@ -1,12 +1,10 @@
 const db = require("../config/db.config.js");
 const Chat = db.chat;
-const User = db.user;
 
 // FETCH all boards
 exports.findAll = (req, res) => {
   Chat.findAll()
     .then((chats) => {
-      // Send all boards to Client
       res.send(chats);
     })
     .catch((err) => {
@@ -14,7 +12,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-// // Find a Board by Id
 exports.findById = (req, res) => {
   Chat.findByPk(req.params.chatId, { include: { all: true, nested: true } })
     .then((Chat) => {
@@ -25,7 +22,6 @@ exports.findById = (req, res) => {
     });
 };
 
-// Update a Board
 exports.update = async (req, res) => {
   const id = req.params.chatId;
   await Chat.update(
@@ -38,7 +34,6 @@ exports.update = async (req, res) => {
   );
 };
 
-// Delete a Board by Id
 exports.delete = (req, res) => {
   const id = req.params.boardId;
   Chat.destroy({
@@ -73,7 +68,6 @@ exports.createMessage = (req, res) => {
 exports.createChat = async (req, res) => {
   try {
     if (!req?.body.person) {
-      //хз работает ли тут throw
       throw new Error("Choose person to start a chat");
     }
     const isChatExist = await Chat.findAll({
@@ -84,7 +78,6 @@ exports.createChat = async (req, res) => {
         ],
       },
     });
-    // console.log(isChatExist, "isChatExist=======================");
     if (isChatExist.length > 0) {
       res.status(420).send("Chat already exists");
       return;
@@ -93,7 +86,6 @@ exports.createChat = async (req, res) => {
     //Проверка на существующий чат
     //Ищем в userChats чат, в котором есть оба id. Если такой есть, выкидываем ошибку.
     // if (!req?.body.person) {
-    //   //хз работает ли тут throw
     //   throw new Error("Choose person to start a chat");
     // }
 

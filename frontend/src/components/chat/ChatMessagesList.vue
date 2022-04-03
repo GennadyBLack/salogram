@@ -1,27 +1,30 @@
 <template>
-  <div class="messages-wrapper" v-if="route.params.id">
-    <div class="messages" ref="windowComponent">
-      {{ chatter?.id }}-id
-      <pencil v-if="isTyping" class="types" />
-      <MessageItem
-        ref="scrollComponent"
-        v-for="message in messages"
-        :key="message?.id"
-        :message="message"
-        :side="`${message?.user?.id == current_user.id ? 'right' : 'left'}`"
-      />
+  <fragment>
+    <div class="messages-wrapper" v-show="route.params.id">
+      <div class="messages" ref="windowComponent">
+        <pencil v-if="isTyping" class="types" />
+        <MessageItem
+          ref="scrollComponent"
+          v-for="message in messages"
+          :key="message?.id"
+          :message="message"
+          :side="`${message?.user?.id == current_user.id ? 'right' : 'left'}`"
+        />
+      </div>
+      <form class="message-form d-flex" @submit.prevent="sendMessage">
+        <InputField
+          extend-class="full full-blue"
+          @keydown="socketStartType"
+          @keyup="socketStopType"
+          v-model="text"
+        />
+        <base-button class="full full-blue" type="submit"
+          >Отправить</base-button
+        >
+      </form>
     </div>
-    <form class="message-form d-flex" @submit.prevent="sendMessage">
-      <InputField
-        extend-class="full full-blue"
-        @keydown="socketStartType"
-        @keyup="socketStopType"
-        v-model="text"
-      />
-      <base-button class="full full-blue" type="submit">Отправить</base-button>
-    </form>
-  </div>
-  <div v-else class="nomessage">Выберите чат позязя</div>
+    <div v-show="!route.params.id" class="nomessage">Выберите чат позязя</div>
+  </fragment>
 </template>
 <script setup>
 import _ from 'lodash'
@@ -44,7 +47,7 @@ import { useRoute } from 'vue-router'
 //Если вызываем здесь композабл userChats, то видимо из-за нестед роутов он маунтится дважды, и компьютеды срабатывают дважды,
 //поэтому необходимые ф-ии и объекты переданы через пропсы
 
-import userChats from '../../composables/chatComposable'
+// import userChats from '../../composables/chatComposable'
 import InputField from '../fields/InputField'
 
 const props = defineProps({
@@ -53,19 +56,19 @@ const props = defineProps({
 })
 
 const { messages, fetchMessages } = useMeassages()
-const { getChat } = userChats()
+// const { getChat, fetchChatById } = userChats()
 const route = useRoute()
 const text = ref(null)
 const isTyping = ref(false)
 const scrollComponent = ref([])
 
 const chatter = computed(() => {
-  console.log(getChat, 'hetchat')
-  return getChat?.value?.users?.find(
-    (user) => user?.id !== current_user?.value?.id
-  )
+  let u = props.getChat.users.find((user) => user.id !== current_user.value.id)
+  console.log(u, '------chatter')
+  return u
 })
 
+props.fetchChatById(route.params.id)
 defineExpose({ scrollComponent })
 
 // const windowComponent = ref(null)
@@ -161,7 +164,8 @@ const socketStartType = _.debounce(() => {
   flex-direction: column-reverse;
 }
 .message-form {
-  width: 100%;
+  width: 43%;
+  position: relative;
   margin-top: 1rem;
 }
 .nomessage {

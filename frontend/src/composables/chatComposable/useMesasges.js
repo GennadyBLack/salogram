@@ -12,12 +12,16 @@ export default () => {
   const id = computed(() => route.params.id)
 
   const fetchMessages = async (config = initFilter) => {
-    socketEmit('openChat', {
-      chatId: id.value,
-    })
-    const fetched = (await messagesApi.getMessagesList(id.value, config)).data
-      .data
-    messages.value.push(...fetched)
+    if (id.value) {
+      socketEmit('openChat', {
+        chatId: id.value,
+      })
+      const fetched = (await messagesApi.getMessagesList(id.value, config)).data
+        .data
+      messages.value.push(...fetched)
+    } else {
+      console.log('please provide id')
+    }
   }
 
   onMounted(async () => {
