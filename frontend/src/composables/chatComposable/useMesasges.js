@@ -18,7 +18,7 @@ export default () => {
       })
       const fetched = (await messagesApi.getMessagesList(id.value, config)).data
         .data
-      messages.value.push(...fetched)
+      messages.value = fetched
     } else {
       console.log('please provide id')
     }

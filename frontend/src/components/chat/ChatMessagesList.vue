@@ -119,7 +119,7 @@ async function sendMessage() {
     chatterName: chatter.value.username,
     text: text.value,
   })
-  // text.value = ''
+  text.value = ''
   fetchMessages()
 }
 // function socketType() {

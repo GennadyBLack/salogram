@@ -81,6 +81,7 @@ try {
     }
   }).on("connection", async function (socket) {
     try {
+      //смена статуса
       await User.update(
         { status: true },
         {
@@ -96,8 +97,8 @@ try {
     socket.join(`notify:${socket.userID}`); // подключаем пользователя к своей комнате.
     console.error(`USER CONNECTED ${socket.userID}`);
 
-    socket.broadcast.emit(`status:${socket?.userID}`, true); //status connect true
-    socket.emit(`status:${socket.userID}`, true); //status connect true
+    // socket.broadcast.emit(`status:${socket?.userID}`, true); //status connect true
+    // socket.emit(`status:${socket.userID}`, true); //status connect true
 
     socket.on("openChat", (data) => {
       socket.join(`personal:${data.chatId}`); // подключаем пользователя к комнате чата.

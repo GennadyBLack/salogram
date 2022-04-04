@@ -27,6 +27,10 @@ db.sequelize = sequelize;
 db.user = require("../model/user.model.js")(sequelize, Sequelize);
 db.chat = require("../model/chat.model.js")(sequelize, Sequelize);
 db.message = require("../model/message.model.js")(sequelize, Sequelize);
+db.unreadMessage = require("../model/unreadMessage.model.js")(
+  sequelize,
+  Sequelize
+);
 // db.setting = require("../model/setting.model.js")(sequelize, Sequelize);
 
 //?RELATONSHIPS
@@ -38,5 +42,11 @@ db.message.belongsTo(db.chat);
 
 db.user.hasMany(db.message);
 db.message.belongsTo(db.user);
+
+db.chat.hasMany(db.unreadMessage, { onDelete: "CASCADE" });
+db.unreadMessage.belongsTo(db.chat);
+
+db.user.hasMany(db.unreadMessage);
+db.unreadMessage.belongsTo(db.user);
 
 module.exports = db;
